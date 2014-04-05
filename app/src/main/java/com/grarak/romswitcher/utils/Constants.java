@@ -1,6 +1,7 @@
 package com.grarak.romswitcher.utils;
 
 import android.os.Build;
+import android.os.Environment;
 
 /*
  * Copyright (C) 2013 The RomSwitcher Project
@@ -24,7 +25,7 @@ import android.os.Build;
 
 public interface Constants {
 
-    public String externalStorage = "/sdcard";
+    public String externalStorage = Environment.getExternalStorageDirectory().getPath();
     public String romswitcherPath = externalStorage + "/romswitcher";
     public String downloadPath = romswitcherPath + "/downloads";
     public String toolfile = downloadPath + "/tools.zip";

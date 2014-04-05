@@ -18,6 +18,8 @@ import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.RootUtils;
 import com.grarak.romswitcher.utils.Utils;
 
+import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+
 /*
  * Copyright (C) 2013 The RomSwitcher Project
  *
@@ -189,11 +191,11 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         @Override
         protected void onProgressUpdate(Integer... progress) {
             super.onProgressUpdate(progress);
-            if (installTools && utils.ProgressDialog != null) {
-                utils.ProgressDialog.show();
-                utils.ProgressDialog.setIndeterminate(false);
-                utils.ProgressDialog.setMax(100);
-                utils.ProgressDialog.setProgress(progress[0]);
+            if (installTools && (ProgressDialog != null)) {
+                utils.showProgressDialog(context.getString(R.string.installing), true);
+                ProgressDialog.setIndeterminate(false);
+                ProgressDialog.setMax(100);
+                ProgressDialog.setProgress(progress[0]);
             }
         }
 
@@ -204,7 +206,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
 
             utils.toast(context.getString(result != null ? R.string.something_went_wrong : R.string.done), context);
 
-            if (installTools && utils.ProgressDialog != null) {
+            if (installTools && ProgressDialog != null) {
                 utils.showProgressDialog("", false);
                 if (utils.oneKernel() && result == null) utils.checkReboot(context);
             } else

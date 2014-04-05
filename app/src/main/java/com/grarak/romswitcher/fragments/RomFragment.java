@@ -21,6 +21,8 @@ import com.grarak.romswitcher.utils.Utils;
 
 import java.io.File;
 
+import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+
 /*
  * Copyright (C) 2013 The RomSwitcher Project
  *
@@ -232,9 +234,9 @@ public class RomFragment extends PreferenceFragment implements Constants {
             super.onProgressUpdate(values);
 
             utils.showProgressDialog(context.getString(R.string.creating), true);
-            utils.ProgressDialog.setIndeterminate(false);
-            utils.ProgressDialog.setMax(systemsize);
-            utils.ProgressDialog.setProgress(values[0]);
+            ProgressDialog.setIndeterminate(false);
+            ProgressDialog.setMax(systemsize);
+            ProgressDialog.setProgress(values[0]);
         }
 
         @Override

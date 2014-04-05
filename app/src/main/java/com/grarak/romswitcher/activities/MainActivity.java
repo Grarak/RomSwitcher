@@ -69,6 +69,8 @@ public class MainActivity extends Activity implements Constants {
                     page.setScaleY(normalizedposition / 2 + 0.5f);
                 }
             });
+
+            mViewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
         } else {
             startActivity(new Intent(getApplicationContext(), RomSwitcherActivity.class));
             finish();

@@ -15,6 +15,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+
 /*
  * Copyright (C) 2013 The RomSwitcher Project
  *
@@ -114,11 +116,11 @@ public class StartDownload extends AsyncTask<String, Integer, String> implements
     @Override
     protected void onProgressUpdate(Integer... progress) {
         super.onProgressUpdate(progress);
-        if (utils.ProgressDialog != null) {
+        if (ProgressDialog != null) {
             utils.showProgressDialog(context.getString(R.string.downloading), true);
-            utils.ProgressDialog.setIndeterminate(false);
-            utils.ProgressDialog.setMax(100);
-            utils.ProgressDialog.setProgress(progress[0]);
+            ProgressDialog.setIndeterminate(false);
+            ProgressDialog.setMax(100);
+            ProgressDialog.setProgress(progress[0]);
         }
     }
 
@@ -130,7 +132,7 @@ public class StartDownload extends AsyncTask<String, Integer, String> implements
         }
 
         mWakeLock.release();
-        if (utils.ProgressDialog != null) utils.showProgressDialog("", false);
+        if (ProgressDialog != null) utils.showProgressDialog("", false);
         utils.toast(result != null ? context.getString(R.string.error) + ": " + result : context.getString(R.string.done), context);
         if (result != null) {
             utils.deleteFile(path + "/" + name);

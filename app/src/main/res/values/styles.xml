@@ -1,7 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar"></style>
-
     <style name="ButtonTheme" parent="@android:style/Widget.ActionButton">
         <item name="android:layout_height">16dp</item>
         <item name="android:textSize">30sp</item>

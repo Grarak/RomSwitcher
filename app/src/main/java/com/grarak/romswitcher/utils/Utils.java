@@ -74,7 +74,7 @@ public class Utils implements Helpers, Constants {
     public void createProgressDialog(Context context) {
         ProgressDialog = new ProgressDialog(context);
         ProgressDialog.setIndeterminate(true);
-        ProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        ProgressDialog.setProgressStyle(android.app.ProgressDialog.STYLE_HORIZONTAL);
     }
 
     @Override
