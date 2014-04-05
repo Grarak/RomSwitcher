@@ -4,11 +4,11 @@
 
     <PreferenceCategory android:key="rom_category">
 
-        <PreferenceScreen android:key="reboot_rom"/>
-        <PreferenceScreen android:key="remove_rom"/>
+        <PreferenceScreen android:key="reboot_rom" />
+        <PreferenceScreen android:key="remove_rom" />
         <PreferenceScreen
             android:key="system_size"
-            android:summary="@string/system_image_size_summary"/>
+            android:summary="@string/system_image_size_summary" />
 
     </PreferenceCategory>
 

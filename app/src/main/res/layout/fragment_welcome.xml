@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@android:color/holo_red_light"
-                android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_red_light"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button_next"
@@ -23,7 +23,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/next"/>
+            android:text="@string/next" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,14 +43,14 @@
             android:textStyle="italic|bold"
             android:textColor="@android:color/white"
             android:paddingTop="40dp"
-            android:textSize="40sp"/>
+            android:textSize="40sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome_summary"
             android:textColor="@android:color/white"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
     </LinearLayout>
 
 </RelativeLayout>

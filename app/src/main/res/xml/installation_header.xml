@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:key="install_header">
+    android:key="install_header">
 
     <PreferenceCategory android:title="@string/installation">
 
         <PreferenceScreen
             android:key="install_tools"
             android:title="@string/install_tools"
-            android:summary="@string/install_tools_summary"/>
+            android:summary="@string/install_tools_summary" />
 
     </PreferenceCategory>
 
@@ -19,12 +19,12 @@
         <PreferenceScreen
             android:key="reboot_into_recovery"
             android:title="@string/reboot_into_recovery"
-            android:summary="@string/reboot_into_recovery_summary"/>
+            android:summary="@string/reboot_into_recovery_summary" />
 
         <PreferenceScreen
             android:key="install_recovery"
             android:title="@string/install_recovery"
-            android:summary="@string/install_recovery_summary"/>
+            android:summary="@string/install_recovery_summary" />
 
     </PreferenceCategory>
 
@@ -34,11 +34,11 @@
 
         <SwitchPreference
             android:key="manualboot"
-            android:title="@string/manualboot"/>
+            android:title="@string/manualboot" />
 
         <SwitchPreference
             android:key="appsharing"
-            android:title="@string/appsharing"/>
+            android:title="@string/appsharing" />
 
     </PreferenceCategory>
 
