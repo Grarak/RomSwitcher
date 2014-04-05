@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.grarak.romswitcher"
-          android:versionCode="1"
-          android:versionName="0.1">
+          package="com.grarak.romswitcher">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19"/>
-
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
+<uses-permission android:name="android.permission.ACCESS_SUPERUSER"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
