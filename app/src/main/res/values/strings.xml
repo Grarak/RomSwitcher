@@ -26,10 +26,9 @@
 
     <!-- Welcome screen -->
     <string name="welcome">Welcome</string>
-    <string name="thank_for_downloading">Thank you for downloading RomSwitcher!</string>
-    <string name="set_names">Set names of ROMs</string>
-    <string name="romone">ROM 1</string>
-    <string name="romtwo">ROM 2</string>
+    <string name="welcome_summary">Thank you for downloading RomSwitcher!</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="tutorial_summary">After every launch of RomSwitcher you should download the configuration file.\nThis will update the required informations to use RomSwitcher.\nBe careful as usual!</string>
     <string name="setup_complete">Your setup is complete!</string>
     <string name="use_romswitcher">Let\'s use RomSwitcher</string>
 
@@ -39,7 +38,7 @@
     <string name="current_version">Current version</string>
     <string name="last_version">Last version</string>
     <string name="download_configuration_file">Download configuration file</string>
-    <string name="download_configuration_file_summary">Download the latest configuration(database) for your device. The configuration file also contains informations for new updates.</string>
+    <string name="download_configuration_file_summary">Download the latest configuration(database) for your device. The configuration file also contains informations for latest updates.</string>
     <string name="download_tools">Download tools</string>
     <string name="download_tools_summary">Download the installation files.</string>
     <string name="download_configuration_first">Please download the configuration file first.</string>
