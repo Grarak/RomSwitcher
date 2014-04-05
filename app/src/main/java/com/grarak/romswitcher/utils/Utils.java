@@ -40,6 +40,21 @@ public class Utils implements Helpers, Constants {
     }
 
     @Override
+    public boolean isSupported() {
+        if (existfile(configurationFile))
+            try {
+                String configuration = readFile(configurationFile);
+                if (configuration.contains("<devices>")) {
+                    String devices = configuration.split("<devices>")[1].split("</devices>")[0];
+                    return devices.contains(deviceName) || devices.contains(deviceBoard);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "unable to read configuration file");
+            }
+        return false;
+    }
+
+    @Override
     public void createProgressDialog(Context context) {
         ProgressDialog = new ProgressDialog(context);
         ProgressDialog.setIndeterminate(true);
@@ -275,14 +290,14 @@ public class Utils implements Helpers, Constants {
     }
 
     private String getDeviceConfig(String configuration, String value) {
-        if (configuration.contains("<devices>")) {
+        if (configuration.contains("<devices>") && isSupported()) {
             String deviceConfig = configuration.split("<devices>")[1].split("</devices>")[0].split("<" + model(configuration))[1].split("/>")[0];
             if (deviceConfig.contains(value)) {
                 String deviceValue = deviceConfig.split(value + "=\"")[1].split("\"")[0];
                 if (!deviceConfig.isEmpty()) return deviceValue;
             }
         }
-        return "";
+        return "0";
     }
 
     private String model(String configuration) {

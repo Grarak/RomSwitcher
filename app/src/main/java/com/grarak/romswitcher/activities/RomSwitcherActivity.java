@@ -58,10 +58,12 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
         setContentView(R.layout.activity_romswitcher);
 
         fragments.add(new DownloadFragment());
-        fragments.add(new InstallationFragment());
-
         fragmentsname.add(getString(R.string.download));
-        fragmentsname.add(getString(R.string.installation));
+
+        if (new Utils().isSupported()) {
+            fragments.add(new InstallationFragment());
+            fragmentsname.add(getString(R.string.installation));
+        }
 
         for (int i = 1; i <= new Utils().getRomNumber(); i++) {
             fragments.add(RomFragment.newInstance(i));

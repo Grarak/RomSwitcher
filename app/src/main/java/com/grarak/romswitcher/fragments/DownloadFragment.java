@@ -92,7 +92,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
                     RomSwitcherActivity.showProgress(false);
 
                     if (getKernel) {
-                        if (getDownloadLink().isEmpty())
+                        if (!utils.isSupported())
                             utils.toast(getString(R.string.no_support), getActivity());
                         else
                             startDownload(getDownloadLink());

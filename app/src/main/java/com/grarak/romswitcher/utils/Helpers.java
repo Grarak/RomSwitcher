@@ -13,6 +13,8 @@ public interface Helpers {
 
     // All my helpers I like it (meow)
 
+    public boolean isSupported();
+
     public void createProgressDialog(Context context);
 
     public void showProgressDialog(String message, boolean show);
