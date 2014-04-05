@@ -103,6 +103,8 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
             }
         });
 
+        mViewPager.setOffscreenPageLimit(fragments.size());
+
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++)
             if (actionBar != null)
                 actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
