@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public interface Helpers {
 
-    // All my helpers I like it (meow)
+    // All my helpers, I like it (meow)
 
     public boolean isSupported();
 
