@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RomSwitcher</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="unknown">Unknown</string>
+    <string name="noconnection">No connection</string>
+    <string name="nobusybox">No busybox found</string>
+    <string name="noroot">No root access</string>
+    <string name="loading">Loading</string>
+    <string name="downloading">Downloading</string>
+    <string name="installing">Installing</string>
+    <string name="error">Error</string>
+    <string name="done">Done</string>
+    <string name="no_support">No support, sorry!</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="you_sure">Are you sure?</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+
+    <!-- Unit -->
+    <string name="mb">MB</string>
+
+    <!-- Welcome screen -->
+    <string name="welcome">Welcome</string>
+    <string name="thank_for_downloading">Thank you for downloading RomSwitcher!</string>
+    <string name="set_names">Set names of ROMs</string>
+    <string name="romone">ROM 1</string>
+    <string name="romtwo">ROM 2</string>
+    <string name="setup_complete">Your setup is complete!</string>
+    <string name="use_romswitcher">Let\'s use RomSwitcher</string>
+
+    <!-- Download -->
+    <string name="download">Download</string>
+    <string name="downloads">Downloads</string>
+    <string name="current_version">Current version</string>
+    <string name="last_version">Last version</string>
+    <string name="download_configuration_file">Download configuration file</string>
+    <string name="download_configuration_file_summary">Download the latest configuration(database) for your device. The configuration file also contains informations for new updates.</string>
+    <string name="download_tools">Download tools</string>
+    <string name="download_tools_summary">Download the installation files.</string>
+    <string name="download_configuration_first">Please download the configuration file first.</string>
+
+    <!-- Installation -->
+    <string name="installation">Installation</string>
+    <string name="install_tools">Install tools</string>
+    <string name="install_tools_summary">Install the required files. Do this always after you downloaded the tools.</string>
+    <string name="recovery">Recovery</string>
+    <string name="reboot_into_recovery">Reboot into RomSwitcher recovery</string>
+    <string name="reboot_into_recovery_summary">Reboot into RomSwitcher recovery, without overwritting the current recovery partition.</string>
+    <string name="install_recovery">Install RomSwitcher recovery</string>
+    <string name="install_recovery_summary">Install RomSwitcher recovery as default recovery.</string>
+    <string name="download_tools_first">Please download the tools first.</string>
+    <string name="install_tools_first">Please install the tools first.</string>
+    <string name="check_boot_partition">Is %1$s the %2$s partition of your device?</string>
+    <string name="reboot_now">Do you want to reboot your device?</string>
+    <string name="settings">Settings</string>
+    <string name="manualboot">Manualboot</string>
+    <string name="appsharing">Appsharing</string>
+
+    <!-- Rom -->
+    <string name="rom">ROM %d</string>
+    <string name="reboot_rom">Reboot into ROM %d</string>
+    <string name="remove_rom">Remove ROM %d</string>
+    <string name="system_image_size">System image size of ROM %d</string>
+    <string name="system_image_size_summary">Create an own system image with custom size. WARNING this will remove your old system image.</string>
+    <string name="creating">Creating</string>
+
+</resources>
