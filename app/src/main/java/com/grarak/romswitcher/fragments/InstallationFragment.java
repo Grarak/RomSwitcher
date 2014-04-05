@@ -131,9 +131,12 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                 if (utils.unZip(downloadPath + "/", "tools.zip")) {
                     for (int i = 0; i < 100; i++) {
                         try {
-                            /* We don't do anything just let the user think that we are installing something
+
+                            /*
+                             * We don't do anything just let the user think that we are installing something
                              * I like to troll (meow)
                              */
+
                             Thread.sleep(5);
                             if (i == 50) {
                                 if (utils.oneKernel()) {

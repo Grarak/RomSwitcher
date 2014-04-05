@@ -185,7 +185,9 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String getPartition(String partition) {
-        /* Took me 1 hours! Stupid Sammy fstab (grrrr)
+
+        /*
+         * Took me 1 hour! Stupid Sammy fstab (grrrr)
          * And still only supports 4.3 and 4.4 (die die die! meow)
          */
 
