@@ -21,14 +21,10 @@ package com.grarak.romswitcher.utils;
  */
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.grarak.romswitcher.R;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -110,23 +106,6 @@ public class Utils implements Helpers, Constants {
     @Override
     public boolean isDefaultRom() {
         return !existfile("/.firstrom");
-    }
-
-    @Override
-    public void checkReboot(Context context) {
-        AlertDialog.Builder warning = new AlertDialog.Builder(context);
-        warning.setMessage(context.getString(R.string.reboot_now))
-                .setPositiveButton(context.getString(R.string.yes
-                ), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        root.reboot();
-                    }
-                }).setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }).show();
     }
 
     @Override

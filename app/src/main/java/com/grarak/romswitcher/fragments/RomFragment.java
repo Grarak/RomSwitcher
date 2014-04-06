@@ -119,9 +119,9 @@ public class RomFragment extends PreferenceFragment implements Constants {
         else if (preference == findPreference(KEY_BACKUP_ROM))
             backup();
         else if (preference == findPreference(KEY_RESTORE_ROM))
-            restore();
+            showBackupList(true);
         else if (preference == findPreference(KEY_DELETE_BACKUP))
-            delete();
+            showBackupList(false);
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -240,67 +240,41 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private int selected = 0;
     private int buffKey = 0;
 
-    private void restore() {
-        File backup = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom");
-
-        if (backup.exists() && backup.listFiles() != null) {
-            List<String> listItems = new ArrayList<String>();
-
-            for (File file : backup.listFiles())
-                listItems.add(file.getName());
-
-            final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
-
-            AlertDialog.Builder listbackup = new AlertDialog.Builder(getActivity());
-            listbackup.setSingleChoiceItems(choiceList, selected,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            buffKey = i;
-                        }
-                    }
-            ).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            }).setPositiveButton(getString(R.string.restore), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    new Restore(getActivity(), choiceList[buffKey].toString(), currentFragment).execute();
-                }
-            }).show();
-        } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
-    }
-
-    private void delete() {
+    private void showBackupList(final boolean restore) {
         File backup = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom");
 
         List<String> listItems = new ArrayList<String>();
 
-        for (File file : backup.listFiles())
-            listItems.add(file.getName());
+        if (backup.listFiles() != null) {
+            if (backup.listFiles().length > 0) {
+                for (File file : backup.listFiles())
+                    listItems.add(file.getName());
 
-        final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
+                final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
 
-        if (backup.exists() && choiceList.length > 0) {
-            AlertDialog.Builder listbackup = new AlertDialog.Builder(getActivity());
-            listbackup.setSingleChoiceItems(choiceList, selected,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            buffKey = i;
+                AlertDialog.Builder listbackup = new AlertDialog.Builder(getActivity());
+                listbackup.setSingleChoiceItems(choiceList, selected,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                buffKey = i;
+                            }
                         }
+                ).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                     }
-            ).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            }).setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    root.run("rm -rf " + backupPath + "/" + String.valueOf(currentFragment) + "rom/" + choiceList[buffKey].toString());
-                }
-            }).show();
+                }).setPositiveButton(getString(restore ? R.string.restore : R.string.delete), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (restore)
+                            new Restore(getActivity(), choiceList[buffKey].toString(), currentFragment).execute();
+                        else
+                            root.run("rm -rf " + backupPath + "/" + String.valueOf(currentFragment) + "rom/" + choiceList[buffKey].toString());
+
+                    }
+                }).show();
+            } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
         } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
     }
 

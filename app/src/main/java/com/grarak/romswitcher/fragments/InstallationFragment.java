@@ -111,10 +111,9 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                     utils.toast(getString(R.string.download_tools_first), getActivity());
             else if (!utils.isRSInstalled())
                 utils.toast(getString(R.string.install_tools_first), getActivity());
-            else if (preference == findPreference(KEY_REBOOT_INTO_RECOVERY)) {
-                root.run("echo 1 > " + utils.dataPath + "/media" + rebootRecoveryFile);
-                utils.checkReboot(getActivity());
-            } else if (preference == findPreference(KEY_INSTALL_RECOVERY))
+            else if (preference == findPreference(KEY_REBOOT_INTO_RECOVERY))
+                checkReboot(true);
+            else if (preference == findPreference(KEY_INSTALL_RECOVERY))
                 checkPartition("recovery", "recovery");
         }
 
@@ -208,7 +207,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
 
             if (installTools && ProgressDialog != null) {
                 utils.showProgressDialog("", false);
-                if (utils.oneKernel() && result == null) utils.checkReboot(context);
+                if (utils.oneKernel() && result == null) checkReboot(false);
             } else
                 RomSwitcherActivity.showProgress(false);
         }
@@ -242,5 +241,21 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         }).show();
     }
 
+    private void checkReboot(final boolean recovery) {
+        AlertDialog.Builder rebooter = new AlertDialog.Builder(getActivity());
+        rebooter.setMessage(getString(R.string.reboot_now))
+                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (recovery)
+                    root.run("echo 1 > " + utils.dataPath + "/media" + rebootRecoveryFile);
+                root.reboot();
+            }
+        }).show();
+    }
 
 }

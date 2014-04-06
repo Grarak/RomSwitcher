@@ -39,8 +39,6 @@ public interface Helpers {
 
     public boolean isDefaultRom();
 
-    public void checkReboot(Context context);
-
     public void reset(Activity activity);
 
     public boolean isRSInstalled();
