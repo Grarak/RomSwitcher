@@ -285,15 +285,16 @@ public class RomFragment extends PreferenceFragment implements Constants {
         protected String doInBackground(String... params) {
             try {
                 File rom = new File(utils.dataPath + "/media/." + String.valueOf(currentFragment) + "rom");
-                String path = backupPath + String.valueOf(currentFragment) + "rom";
+                String path = backupPath + "/" + String.valueOf(currentFragment) + "rom/" + name;
+
                 if (rom.exists()) root.run("rm -rf " + rom.toString());
                 root.run("mkdir -p " + rom.toString());
 
                 Thread.sleep(1000);
 
-                root.run("cp -rf " + path + "/" + name + "/* " + rom.toString());
+                root.run("cp -rf " + path + "/* " + rom.toString());
 
-                long backupsize = utils.getFolderSize(path + "/" + name);
+                long backupsize = utils.getFolderSize(path);
 
                 while (backupsize != utils.getFolderSize(rom.toString()))
                     publishProgress((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)));
