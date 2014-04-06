@@ -94,6 +94,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
         @Override
         protected void onPostExecute(String result) {
+            RomSwitcherActivity.showProgress(false);
             if (GetConnection.htmlstring.isEmpty() && !GetConnection.htmlstring.contains("<devices>"))
                 utils.toast(getString(R.string.noconnection), getActivity());
             else {
