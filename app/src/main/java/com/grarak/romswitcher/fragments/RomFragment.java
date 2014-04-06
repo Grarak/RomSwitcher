@@ -23,9 +23,7 @@ package com.grarak.romswitcher.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -41,14 +39,13 @@ import com.grarak.romswitcher.utils.Backup;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.CreateImage;
 import com.grarak.romswitcher.utils.RebootRom;
+import com.grarak.romswitcher.utils.Restore;
 import com.grarak.romswitcher.utils.RootUtils;
 import com.grarak.romswitcher.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
 
 public class RomFragment extends PreferenceFragment implements Constants {
 
@@ -265,73 +262,11 @@ public class RomFragment extends PreferenceFragment implements Constants {
             }).setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    new Restore(choiceList[buffKey].toString()).execute();
+                    new Restore(getActivity(), choiceList[buffKey].toString(), currentFragment).execute();
                 }
             }).show();
         } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
     }
 
-    private class Restore extends AsyncTask<String, Integer, String> {
 
-        private PowerManager.WakeLock mWakeLock;
-
-        private String name;
-
-        public Restore(String name) {
-            this.name = name;
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                File rom = new File(utils.dataPath + "/media/." + String.valueOf(currentFragment) + "rom");
-                String path = backupPath + "/" + String.valueOf(currentFragment) + "rom/" + name;
-
-                if (rom.exists()) root.run("rm -rf " + rom.toString());
-                root.run("mkdir -p " + rom.toString());
-
-                Thread.sleep(1000);
-
-                root.run("cp -rf " + path + "/* " + rom.toString());
-
-                long backupsize = utils.getFolderSize(path);
-
-                while (backupsize != utils.getFolderSize(rom.toString()))
-                    publishProgress((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)));
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-            utils.showProgressDialog(context.getString(R.string.restoring), true);
-            ProgressDialog.setIndeterminate(false);
-            ProgressDialog.setMax(100);
-            ProgressDialog.setProgress(values[0]);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            utils.showProgressDialog(context.getString(R.string.restoring), true);
-
-            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
-            mWakeLock.acquire();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            mWakeLock.release();
-
-            utils.showProgressDialog("", false);
-        }
-    }
 }
