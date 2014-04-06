@@ -30,7 +30,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-public class GetConntection extends AsyncTask<String, Void, String> {
+public class GetConnection extends AsyncTask<String, Void, String> {
 
     public static String htmlstring = "";
 

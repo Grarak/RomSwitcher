@@ -29,7 +29,7 @@ import android.preference.PreferenceScreen;
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.activities.RomSwitcherActivity;
 import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.GetConntection;
+import com.grarak.romswitcher.utils.GetConnection;
 import com.grarak.romswitcher.utils.StartDownload;
 import com.grarak.romswitcher.utils.Utils;
 
@@ -83,7 +83,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
         @Override
         protected String doInBackground(String... params) {
-            return GetConntection.htmlstring;
+            return GetConnection.htmlstring;
         }
 
         @Override
@@ -94,12 +94,12 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
         @Override
         protected void onPostExecute(String result) {
-            if (GetConntection.htmlstring.isEmpty() && !GetConntection.htmlstring.contains("<devices>"))
+            if (GetConnection.htmlstring.isEmpty() && !GetConnection.htmlstring.contains("<devices>"))
                 utils.toast(getString(R.string.noconnection), getActivity());
             else {
                 if (getConfigurationFile) {
                     utils.deleteFile(configurationFile);
-                    utils.writeFile(configurationFile, GetConntection.htmlstring);
+                    utils.writeFile(configurationFile, GetConnection.htmlstring);
                     getConfigurationFile = false;
 
                     if (!utils.existfile(configurationFile))
