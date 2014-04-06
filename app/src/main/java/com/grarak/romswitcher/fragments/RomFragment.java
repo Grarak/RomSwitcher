@@ -74,6 +74,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private final String KEY_SYSTEM_SIZE = "system_size";
     private final String KEY_BACKUP_ROM = "backup_rom";
     private final String KEY_RESTORE_ROM = "restore_rom";
+    private final String KEY_DELETE_BACKUP = "delete_backup";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
         findPreference(KEY_SYSTEM_SIZE).setTitle(getString(R.string.system_image_size, currentFragment));
         findPreference(KEY_BACKUP_ROM).setTitle(getString(R.string.backup_rom, currentFragment));
         findPreference(KEY_RESTORE_ROM).setTitle(getString(R.string.restore_rom, currentFragment));
+        findPreference(KEY_DELETE_BACKUP).setTitle(getString(R.string.delete_backup, currentFragment));
 
         PreferenceScreen mRomHeader = (PreferenceScreen) findPreference(KEY_ROM_HEADER);
         PreferenceCategory mAdvancedCategory = (PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY);
@@ -118,6 +120,8 @@ public class RomFragment extends PreferenceFragment implements Constants {
             backup();
         else if (preference == findPreference(KEY_RESTORE_ROM))
             restore();
+        else if (preference == findPreference(KEY_DELETE_BACKUP))
+            delete();
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -259,7 +263,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                 }
-            }).setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
+            }).setPositiveButton(getString(R.string.restore), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     new Restore(getActivity(), choiceList[buffKey].toString(), currentFragment).execute();
@@ -268,5 +272,36 @@ public class RomFragment extends PreferenceFragment implements Constants {
         } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
     }
 
+    private void delete() {
+        File backup = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom");
+
+        List<String> listItems = new ArrayList<String>();
+
+        for (File file : backup.listFiles())
+            listItems.add(file.getName());
+
+        final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
+
+        if (backup.exists() && choiceList.length > 0) {
+            AlertDialog.Builder listbackup = new AlertDialog.Builder(getActivity());
+            listbackup.setSingleChoiceItems(choiceList, selected,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            buffKey = i;
+                        }
+                    }
+            ).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            }).setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    root.run("rm -rf " + backupPath + "/" + String.valueOf(currentFragment) + "rom/" + choiceList[buffKey].toString());
+                }
+            }).show();
+        } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
+    }
 
 }

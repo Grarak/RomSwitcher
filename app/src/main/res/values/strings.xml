@@ -74,8 +74,11 @@
     <string name="empty_name">Dude, name is blank!</string>
     <string name="overwrite_backup">A backup with this name already exists. Do you want to overwrite it?</string>
     <string name="backing_up">Backing up</string>
+    <string name="restore">Restore</string>
     <string name="restore_rom">Restore ROM %d</string>
     <string name="no_backup_found">No backups found for ROM %d</string>
     <string name="restoring">Restoring</string>
+    <string name="delete">Delete</string>
+    <string name="delete_backup">Delete backups of ROM %d</string>
 
 </resources>

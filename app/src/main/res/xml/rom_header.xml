@@ -25,6 +25,8 @@
 
         <PreferenceScreen android:key="restore_rom" />
 
+        <PreferenceScreen android:key="delete_backup" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
