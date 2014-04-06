@@ -35,6 +35,7 @@
     <!-- Download -->
     <string name="download">Download</string>
     <string name="downloads">Downloads</string>
+    <string name="current_app_version">Current Application Version</string>
     <string name="current_version">Current version</string>
     <string name="last_version">Last version</string>
     <string name="download_configuration_file">Download configuration file</string>

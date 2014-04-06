@@ -5,6 +5,11 @@
     <PreferenceCategory android:title="@string/downloads">
 
         <PreferenceScreen
+            android:key="current_app_version"
+            android:title="@string/current_app_version"
+            android:summary="@string/unknown" />
+
+        <PreferenceScreen
             android:key="current_version"
             android:title="@string/current_version"
             android:summary="@string/unknown" />

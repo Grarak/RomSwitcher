@@ -20,11 +20,13 @@ package com.grarak.romswitcher.fragments;
  * Created by grarak's kitten (meow) on 31.03.14.
  */
 
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.activities.RomSwitcherActivity;
@@ -37,6 +39,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
     private Utils utils = new Utils();
 
+    private final String KEY_CURRENT_APP_VERSION = "current_app_version";
     private final String KEY_CURRENT_VERSION = "current_version";
     private final String KEY_LAST_VERSION = "last_version";
     private final String KEY_DOWNLOAD_CONFIGURATION_FILE = "download_configuration_file";
@@ -51,6 +54,11 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.download_header);
 
+        try {
+            findPreference(KEY_CURRENT_APP_VERSION).setSummary(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "unable to read app version");
+        }
         findPreference(KEY_CURRENT_VERSION).setSummary(getCurrentVersion());
         findPreference(KEY_LAST_VERSION).setSummary(getLastVersion());
     }
