@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="rom_header">
 
     <PreferenceCategory android:key="rom_category">
 
         <PreferenceScreen android:key="reboot_rom" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/advanced_settings"
+        android:key="advanced_category">
+
+        <PreferenceScreen android:summary="@string/advanced_settings_summary" />
+
         <PreferenceScreen android:key="remove_rom" />
+
         <PreferenceScreen
             android:key="system_size"
             android:summary="@string/system_image_size_summary" />
+
+        <PreferenceScreen android:key="backup_rom" />
+
+        <PreferenceScreen android:key="restore_rom" />
 
     </PreferenceCategory>
 

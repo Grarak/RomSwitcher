@@ -1,10 +1,7 @@
 package com.grarak.romswitcher.utils;
 
-import android.os.Build;
-import android.os.Environment;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +20,16 @@ import android.os.Environment;
  * Created by grarak's kitten (meow) on 31.03.14.
  */
 
+import android.os.Build;
+import android.os.Environment;
+
 public interface Constants {
 
     public String externalStorage = Environment.getExternalStorageDirectory().getPath();
     public String romswitcherPath = externalStorage + "/romswitcher";
     public String downloadPath = romswitcherPath + "/downloads";
     public String toolfile = downloadPath + "/tools.zip";
+    public String backupPath = romswitcherPath + "/backup";
 
     public String firstimage = downloadPath + "/first.img";
     public String secondimage = downloadPath + "/second.img";

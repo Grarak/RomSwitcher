@@ -1,24 +1,7 @@
 package com.grarak.romswitcher.utils;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.PowerManager;
-import android.util.Log;
-
-import com.grarak.romswitcher.R;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +19,23 @@ import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
 /*
  * Created by grarak's kitten (meow) on 01.04.14.
  */
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.PowerManager;
+import android.util.Log;
+
+import com.grarak.romswitcher.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
 
 public class StartDownload extends AsyncTask<String, Integer, String> implements Constants {
 

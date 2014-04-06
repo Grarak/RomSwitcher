@@ -1,5 +1,25 @@
 package com.grarak.romswitcher.utils;
 
+/*
+ * Copyright (C) 2014 The RomSwitcher Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*
+ * Created by grarak's kitten (meow) on 31.03.14.
+ */
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,26 +42,6 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/*
- * Copyright (C) 2013 The RomSwitcher Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Created by grarak's kitten (meow) on 31.03.14.
- */
-
 public class Utils implements Helpers, Constants {
 
     private String prefname = "settings";
@@ -53,6 +53,25 @@ public class Utils implements Helpers, Constants {
 
     public Utils() {
         dataPath = existfile("/.firstrom") ? "/.firstrom" : "/data";
+    }
+
+    @Override
+    public long getFolderSize(String folder) {
+        long size = 0;
+
+        /*
+         * Stupid if statement!
+         * Why it just don't return 0 when the folder is empty?!
+         */
+
+        if (new File(folder).listFiles() != null)
+            for (File file : new File(folder).listFiles())
+                if (file.isDirectory())
+                    size += getFolderSize(file.toString());
+                else
+                    size += file.length();
+
+        return size;
     }
 
     @Override

@@ -1,12 +1,7 @@
 package com.grarak.romswitcher.utils;
 
-import android.app.Activity;
-import android.content.Context;
-
-import java.io.IOException;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +20,16 @@ import java.io.IOException;
  * Created by grarak's kitten (meow) on 31.03.14.
  */
 
+import android.app.Activity;
+import android.content.Context;
+
+import java.io.IOException;
+
 public interface Helpers {
 
     // All my helpers, I like it (meow)
+
+    public long getFolderSize(String folder);
 
     public boolean isSupported();
 

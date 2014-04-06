@@ -1,17 +1,7 @@
 package com.grarak.romswitcher.utils;
 
-import android.os.AsyncTask;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +19,16 @@ import java.io.IOException;
 /*
  * Created by grarak's kitten (meow) on 31.03.14.
  */
+
+import android.os.AsyncTask;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 
 public class GetConntection extends AsyncTask<String, Void, String> {
 

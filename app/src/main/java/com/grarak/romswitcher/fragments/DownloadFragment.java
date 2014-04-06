@@ -1,20 +1,7 @@
 package com.grarak.romswitcher.fragments;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
-
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.activities.RomSwitcherActivity;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.GetConntection;
-import com.grarak.romswitcher.utils.StartDownload;
-import com.grarak.romswitcher.utils.Utils;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +19,19 @@ import com.grarak.romswitcher.utils.Utils;
 /*
  * Created by grarak's kitten (meow) on 31.03.14.
  */
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
+
+import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.activities.RomSwitcherActivity;
+import com.grarak.romswitcher.utils.Constants;
+import com.grarak.romswitcher.utils.GetConntection;
+import com.grarak.romswitcher.utils.StartDownload;
+import com.grarak.romswitcher.utils.Utils;
 
 public class DownloadFragment extends PreferenceFragment implements Constants {
 

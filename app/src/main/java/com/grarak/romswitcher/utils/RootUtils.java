@@ -1,16 +1,7 @@
 package com.grarak.romswitcher.utils;
 
-import android.util.Log;
-
-import com.stericson.RootTools.RootTools;
-import com.stericson.RootTools.exceptions.RootDeniedException;
-import com.stericson.RootTools.execution.CommandCapture;
-
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 /*
- * Copyright (C) 2013 The RomSwitcher Project
+ * Copyright (C) 2014 The RomSwitcher Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +19,15 @@ import java.util.concurrent.TimeoutException;
 /*
  * Created by grarak's kitten (meow) on 02.04.14.
  */
+
+import android.util.Log;
+
+import com.stericson.RootTools.RootTools;
+import com.stericson.RootTools.exceptions.RootDeniedException;
+import com.stericson.RootTools.execution.CommandCapture;
+
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 public class RootUtils implements Constants {
 
