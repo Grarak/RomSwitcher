@@ -167,9 +167,12 @@ public class MainActivity extends Activity implements Constants {
                     @Override
                     public void onClick(View view) {
                         new Utils().saveBoolean("firstuse", false, getActivity());
-                        startActivity(new Intent(getActivity(), RomSwitcherActivity.class));
-                        getActivity().overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
+                        final int enter_anim = android.R.anim.fade_in;
+                        final int exit_anim = android.R.anim.fade_out;
+                        getActivity().overridePendingTransition(enter_anim, exit_anim);
                         getActivity().finish();
+                        getActivity().overridePendingTransition(enter_anim, exit_anim);
+                        getActivity().startActivity(new Intent(getActivity(), RomSwitcherActivity.class));
                     }
                 });
             }

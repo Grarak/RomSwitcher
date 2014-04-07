@@ -39,7 +39,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
     private Utils utils = new Utils();
 
-    private final String KEY_CURRENT_APP_VERSION = "current_app_version";
+    private final String KEY_APP_VERSION = "app_version";
     private final String KEY_CURRENT_VERSION = "current_version";
     private final String KEY_LAST_VERSION = "last_version";
     private final String KEY_DOWNLOAD_CONFIGURATION_FILE = "download_configuration_file";
@@ -55,7 +55,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         addPreferencesFromResource(R.xml.download_header);
 
         try {
-            findPreference(KEY_CURRENT_APP_VERSION).setSummary(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
+            findPreference(KEY_APP_VERSION).setSummary(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "unable to read app version");
         }
