@@ -44,7 +44,7 @@ public class RebootRom extends AsyncTask<String, Integer, String> implements Con
 
     @Override
     protected String doInBackground(String... params) {
-        root.run("echo " + String.valueOf(currentFragment - 1) + " > " + utils.dataPath + "/media" + romFile);
+        root.run("echo " + String.valueOf(currentFragment) + " > " + utils.dataPath + "/media" + romFile);
         root.run("echo 1 > " + utils.dataPath + "/media" + nextbootFile);
 
         if (!utils.oneKernel() && (utils.isDefaultRom() || currentFragment == 1))
