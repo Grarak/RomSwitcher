@@ -62,6 +62,7 @@ public class MainActivity extends Activity implements Constants {
 
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setOffscreenPageLimit(3);
 
             mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
                 @Override

@@ -45,12 +45,13 @@
             android:textSize="20sp" />
 
         <Button
-            style="@style/ButtonTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/use_romswitcher"
             android:id="@+id/useromswitcher"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:textStyle="italic|bold"
+            android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </RelativeLayout>
