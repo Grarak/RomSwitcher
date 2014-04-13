@@ -261,7 +261,11 @@ public class Utils implements Helpers, Constants {
     public String getCurrentVersion() {
         if (existfile(oneKernel() ? versionFileOneKernel : versionFile))
             try {
-                return readFile(oneKernel() ? versionFileOneKernel : versionFile);
+                if (oneKernel()) {
+                    root.run("mount -o rw,remount /");
+                    root.run("chmod 777 " + versionFileOneKernel);
+                }
+                return readFile(oneKernel() ? versionFileOneKernel : versionFile).split("\\r?\\n")[0];
             } catch (IOException e) {
                 Log.e(TAG, "unable to read current version file");
             }
