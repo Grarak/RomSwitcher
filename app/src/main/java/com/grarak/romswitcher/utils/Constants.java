@@ -33,7 +33,7 @@ public interface Constants {
 
     public String firstimage = downloadPath + "/first.img";
     public String secondimage = downloadPath + "/second.img";
-    public String onekernelInstalledFile = "/sbin/create_system.sh";
+    public String onekernelInstalledFile = "/sbin/mount_recovery.sh";
     public String onekernelImage = downloadPath + "/boot.img";
     public String rebootRecoveryFile = "/rebootrs";
     public String romFile = "/.rom";

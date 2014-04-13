@@ -156,19 +156,6 @@ public class Utils implements Helpers, Constants {
     }
 
     @Override
-    public int getSystemImageSize() {
-        if (existfile(configurationFile))
-            try {
-                String configuration = readFile(configurationFile);
-                if (configuration.contains("installrecovery"))
-                    return Integer.parseInt(getDeviceConfig(configuration, "systemsize"));
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return 0;
-    }
-
-    @Override
     public boolean manualBoot() {
         if (existfile(configurationFile))
             try {

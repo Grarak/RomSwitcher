@@ -17,10 +17,6 @@
 
         <PreferenceScreen android:key="remove_rom" />
 
-        <PreferenceScreen
-            android:key="system_size"
-            android:summary="@string/system_image_size_summary" />
-
         <PreferenceScreen android:key="backup_rom" />
 
         <PreferenceScreen android:key="restore_rom" />

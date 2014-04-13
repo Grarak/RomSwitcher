@@ -65,11 +65,8 @@
     <string name="rom">ROM %d</string>
     <string name="reboot_rom">Reboot into ROM %d</string>
     <string name="remove_rom">Remove ROM %d</string>
-    <string name="system_image_size">System image size of ROM %d</string>
-    <string name="system_image_size_summary">Create an own system image with custom size. WARNING this will remove your old system image.</string>
     <string name="advanced_settings">Advanced Settings</string>
     <string name="advanced_settings_summary">Do not use these options if you are running this ROM currently!</string>
-    <string name="creating">Creating</string>
     <string name="backup_rom">Backup ROM %d</string>
     <string name="backup_name">Name of backup</string>
     <string name="empty_name">Dude, name is blank!</string>

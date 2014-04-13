@@ -45,8 +45,6 @@ public interface Helpers {
 
     public boolean unZip(String path, String name);
 
-    public int getSystemImageSize();
-
     public boolean manualBoot();
 
     public boolean installRecovery();

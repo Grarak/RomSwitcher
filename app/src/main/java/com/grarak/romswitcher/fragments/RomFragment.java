@@ -31,13 +31,10 @@ import android.preference.PreferenceScreen;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.utils.Backup;
 import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.CreateImage;
 import com.grarak.romswitcher.utils.RebootRom;
 import com.grarak.romswitcher.utils.Restore;
 import com.grarak.romswitcher.utils.RootUtils;
@@ -56,7 +53,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private int currentFragment = 0;
-    private int systemsize = utils.getSystemImageSize();
 
     public static RomFragment newInstance(int sectionNumber) {
         RomFragment fragment = new RomFragment();
@@ -71,7 +67,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private final String KEY_REBOOT_ROM = "reboot_rom";
     private final String KEY_ADVANCED_CATEGORY = "advanced_category";
     private final String KEY_REMOVE_ROM = "remove_rom";
-    private final String KEY_SYSTEM_SIZE = "system_size";
     private final String KEY_BACKUP_ROM = "backup_rom";
     private final String KEY_RESTORE_ROM = "restore_rom";
     private final String KEY_DELETE_BACKUP = "delete_backup";
@@ -87,7 +82,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
         findPreference(KEY_ROM_CATEGORY).setTitle(getString(R.string.rom, currentFragment));
         findPreference(KEY_REBOOT_ROM).setTitle(getString(R.string.reboot_rom, currentFragment));
         findPreference(KEY_REMOVE_ROM).setTitle(getString(R.string.remove_rom, currentFragment));
-        findPreference(KEY_SYSTEM_SIZE).setTitle(getString(R.string.system_image_size, currentFragment));
         findPreference(KEY_BACKUP_ROM).setTitle(getString(R.string.backup_rom, currentFragment));
         findPreference(KEY_RESTORE_ROM).setTitle(getString(R.string.restore_rom, currentFragment));
         findPreference(KEY_DELETE_BACKUP).setTitle(getString(R.string.delete_backup, currentFragment));
@@ -114,8 +108,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
             reboot();
         else if (preference == findPreference(KEY_REMOVE_ROM))
             remove();
-        else if (preference == findPreference(KEY_SYSTEM_SIZE))
-            systemsize();
         else if (preference == findPreference(KEY_BACKUP_ROM))
             backup();
         else if (preference == findPreference(KEY_RESTORE_ROM))
@@ -154,39 +146,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }).show();
-    }
-
-    private void systemsize() {
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setGravity(Gravity.CENTER);
-
-        File systemimage = new File(utils.dataPath + "/media/." + currentFragment + "rom/system.img");
-
-        final NumberPicker picker = new NumberPicker(getActivity());
-        picker.setMaxValue(3000);
-        picker.setValue(systemimage.exists() ? (int) (systemimage.length() / 1048576) : systemsize);
-        picker.setMinValue(500);
-        picker.setWrapSelectorWheel(false);
-
-        TextView unit = new TextView(getActivity());
-        unit.setText(" " + getString(R.string.mb));
-        unit.setTextSize(20);
-
-        layout.addView(picker);
-        layout.addView(unit);
-
-        AlertDialog.Builder sizer = new AlertDialog.Builder(getActivity());
-        sizer.setView(layout).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }).setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                systemsize = picker.getValue();
-                new CreateImage(getActivity(), systemsize, currentFragment).execute();
             }
         }).show();
     }

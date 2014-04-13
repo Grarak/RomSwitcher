@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements Constants {
             new File(romswitcherPath).mkdir();
 
         overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
-        if (new Utils().getBoolean("firstuse", true, getApplicationContext())) {
+        if (new Utils().getBoolean("firstuse", true, getApplicationContext()) && new Utils().isDefaultRom()) {
             setContentView(R.layout.activity_main);
 
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
