@@ -43,7 +43,7 @@ public interface Constants {
     public String appsharingFile = romswitcherPath + "/appsharing";
 
     public String versionFile = downloadPath + "/version";
-    public String versionFileOneKernel = "/sbin/rsversion";
+    public String versionFileOneKernel = "/sbin/version";
 
     public String configurationFile = romswitcherPath + "/configuration.xml";
     public String configurationFileLink = "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/devices";
