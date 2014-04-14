@@ -53,8 +53,11 @@ public class Backup extends AsyncTask<String, Integer, String> implements Consta
             File rom = new File(utils.dataPath + "/media/." + String.valueOf(currentFragment) + "rom");
             String path = backupPath + "/" + String.valueOf(currentFragment) + "rom/" + name;
 
-            if (utils.existfile(path)) utils.deleteFile("rm -rf " + path);
-            root.run("mkdir -p " + path);
+            if (utils.existfile(path)) {
+                utils.deleteFile("rm -rf " + path.toLowerCase());
+                utils.deleteFile("rm -rf " + path);
+            }
+            root.run("mkdir -p " + path.toLowerCase());
 
             Thread.sleep(1000);
 
@@ -62,8 +65,11 @@ public class Backup extends AsyncTask<String, Integer, String> implements Consta
 
             long romsize = utils.getFolderSize(rom.toString());
 
-            while (romsize != utils.getFolderSize(path))
-                publishProgress((int) (utils.getFolderSize(path) / (romsize / 100)));
+            while (true)
+                if ((int) (utils.getFolderSize(path) / (romsize / 100)) <= 100)
+                    publishProgress((int) (utils.getFolderSize(path) / (romsize / 100)));
+                else break;
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

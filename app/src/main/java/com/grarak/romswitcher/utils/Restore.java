@@ -63,8 +63,10 @@ public class Restore extends AsyncTask<String, Integer, String> implements Const
 
             long backupsize = utils.getFolderSize(path);
 
-            while (backupsize != utils.getFolderSize(rom.toString()))
-                publishProgress((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)));
+            while (true)
+                if ((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)) <= 100)
+                    publishProgress((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)));
+                else break;
 
         } catch (InterruptedException e) {
             e.printStackTrace();

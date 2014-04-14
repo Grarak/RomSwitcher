@@ -17,7 +17,9 @@
 
         <PreferenceScreen android:key="remove_rom" />
 
-        <PreferenceScreen android:key="backup_rom" />
+        <PreferenceScreen
+            android:key="backup_rom"
+            android:summary="@string/backup_rom_summary" />
 
         <PreferenceScreen android:key="restore_rom" />
 
