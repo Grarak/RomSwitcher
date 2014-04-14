@@ -23,6 +23,7 @@ package com.grarak.romswitcher.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.activities.RomInformationActivity;
 import com.grarak.romswitcher.utils.Backup;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.RebootRom;
@@ -70,6 +72,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private final String KEY_BACKUP_ROM = "backup_rom";
     private final String KEY_RESTORE_ROM = "restore_rom";
     private final String KEY_DELETE_BACKUP = "delete_backup";
+    private final String KEY_ROM_INFORMATION = "rom_information";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
         findPreference(KEY_BACKUP_ROM).setTitle(getString(R.string.backup_rom, currentFragment));
         findPreference(KEY_RESTORE_ROM).setTitle(getString(R.string.restore_rom, currentFragment));
         findPreference(KEY_DELETE_BACKUP).setTitle(getString(R.string.delete_backup, currentFragment));
+        findPreference(KEY_ROM_INFORMATION).setTitle(getString(R.string.rom_information, currentFragment));
 
         PreferenceScreen mRomHeader = (PreferenceScreen) findPreference(KEY_ROM_HEADER);
         PreferenceCategory mAdvancedCategory = (PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY);
@@ -114,6 +118,8 @@ public class RomFragment extends PreferenceFragment implements Constants {
             showBackupList(true);
         else if (preference == findPreference(KEY_DELETE_BACKUP))
             showBackupList(false);
+        else if (preference == findPreference(KEY_ROM_INFORMATION))
+            showRomInformation();
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -235,6 +241,15 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 }).show();
             } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
         } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
+    }
+
+    private void showRomInformation() {
+        utils.showProgressDialog(getString(R.string.loading), true);
+        Intent info = new Intent(getActivity(), RomInformationActivity.class);
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, currentFragment);
+        info.putExtras(args);
+        startActivity(info);
     }
 
 }

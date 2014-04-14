@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -15,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/android:Theme.Holo.Light.DarkActionBar">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.grarak.romswitcher.activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RomSwitcherActivity" />
+        <activity android:name="com.grarak.romswitcher.activities.RomSwitcherActivity" />
+        <activity android:name="com.grarak.romswitcher.activities.RomInformationActivity" />
     </application>
 
 </manifest>

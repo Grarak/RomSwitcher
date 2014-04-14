@@ -79,5 +79,11 @@
     <string name="restoring">Restoring</string>
     <string name="delete">Delete</string>
     <string name="delete_backup">Delete backups of ROM %d</string>
+    <string name="rom_information">Information about ROM %d</string>
+
+    <!-- Rom Information -->
+    <string name="rom_error">ROM %d is not installed or corrupted</string>
+    <string name="build_prop">Build prop information of ROM %d</string>
+    <string name="rom_size">Size of ROM %d</string>
 
 </resources>
