@@ -29,15 +29,15 @@ public interface Constants {
     public String romswitcherPath = externalStorage + "/romswitcher";
     public String downloadPath = romswitcherPath + "/downloads";
     public String toolfile = downloadPath + "/tools.zip";
-    public String backupPath = romswitcherPath + "/backup";
+    public String backupPath = "/data/media/.romswitcher/backup";
 
     public String firstimage = downloadPath + "/first.img";
     public String secondimage = downloadPath + "/second.img";
     public String onekernelInstalledFile = "/sbin/mount_recovery.sh";
     public String onekernelImage = downloadPath + "/boot.img";
-    public String rebootRecoveryFile = "/rebootrs";
-    public String romFile = "/.rom";
-    public String nextbootFile = "/.nextboot";
+    public String rebootRecoveryFile = "/data/media/rebootrs";
+    public String romFile = "/data/media/.rom";
+    public String nextbootFile = "/data/media/.nextboot";
 
     public String manualbootFile = romswitcherPath + "/manualboot";
     public String appsharingFile = romswitcherPath + "/appsharing";

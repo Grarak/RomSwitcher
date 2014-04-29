@@ -251,8 +251,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                 }).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (recovery)
-                    root.run("echo 1 > " + utils.dataPath + "/media" + rebootRecoveryFile);
+                if (recovery) root.run("echo 1 > " + rebootRecoveryFile);
                 root.reboot();
             }
         }).show();

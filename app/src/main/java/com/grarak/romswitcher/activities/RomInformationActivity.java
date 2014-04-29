@@ -60,21 +60,20 @@ public class RomInformationActivity extends Activity implements Constants {
         currentRom = getIntent().getExtras().getInt(ARG_SECTION_NUMBER);
 
         root.run("rm -f " + romswitcherPath + "/build.prop");
-        root.run("cat " + utils.dataPath + "/media/." + String.valueOf(currentRom) + "rom/system/build.prop > " + romswitcherPath + "/build.prop");
 
         ((TextView) findViewById(R.id.rom_size)).setText(getString(R.string.rom_size, currentRom));
         setSize();
     }
 
     private void setSize() {
-        Command command = new Command(0, "du -ms " + utils.dataPath + "/media/." + String.valueOf(currentRom) + "rom") {
+        Command command = new Command(0, "du -ms /data/media/." + String.valueOf(currentRom) + "rom") {
             @Override
             public void commandCompleted(int arg0, int arg1) {
             }
 
             @Override
             public void commandOutput(int arg0, String arg1) {
-                ((TextView) findViewById(R.id.size)).setText(arg1.replace(utils.dataPath + "/media/." + String.valueOf(currentRom) + "rom", "") + getString(R.string.mb));
+                ((TextView) findViewById(R.id.size)).setText(arg1.replace("/data/media/." + String.valueOf(currentRom) + "rom", "") + getString(R.string.mb));
             }
 
             @Override
@@ -99,7 +98,7 @@ public class RomInformationActivity extends Activity implements Constants {
             ((LinearLayout) findViewById(R.id.buildproplayout)).removeAllViews();
             Thread.sleep(1000);
             utils.showProgressDialog("", false);
-            String props = utils.readFile(romswitcherPath + "/build.prop");
+            String props = utils.readFile("/data/media/." + currentRom + "rom/system/build.prop");
             if (!props.isEmpty() && utils.existfile(romswitcherPath + "/build.prop")) {
 
                 TextView buildproptitle = new TextView(this);
@@ -130,8 +129,10 @@ public class RomInformationActivity extends Activity implements Constants {
             } else error();
         } catch (IOException e) {
             Log.e(TAG, "unable to read build.prop of ROM " + currentRom);
+            error();
         } catch (InterruptedException e) {
             e.printStackTrace();
+            error();
         }
     }
 

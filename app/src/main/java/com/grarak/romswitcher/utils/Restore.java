@@ -50,27 +50,18 @@ public class Restore extends AsyncTask<String, Integer, String> implements Const
 
     @Override
     protected String doInBackground(String... params) {
-        try {
-            File rom = new File(utils.dataPath + "/media/." + String.valueOf(currentFragment) + "rom");
-            String path = backupPath + "/" + String.valueOf(currentFragment) + "rom/" + name;
 
-            if (rom.exists()) root.run("rm -rf " + rom.toString());
-            root.run("mkdir -p " + rom.toString());
+        root.run("echo 1 > /data/media/waiting");
+        root.run("rm -rf /data/media/." + currentFragment + "rom");
+        root.run("tar -xf " + backupPath + "/" + currentFragment + "rom/" + name + ".tar -C /");
+        root.run("rm -f /data/media/waiting");
 
-            Thread.sleep(1000);
+        long backupsize = new File(backupPath + "/" + currentFragment + "rom/" + name + ".tar").length();
 
-            root.run("cp -rf " + path + "/* " + rom.toString());
+        while (utils.existfile("/data/media/waiting"))
+            publishProgress((int) (utils.getFolderSize("/data/media/." + currentFragment + "rom") / (backupsize / 100)));
 
-            long backupsize = utils.getFolderSize(path);
 
-            while (true)
-                if ((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)) <= 100)
-                    publishProgress((int) (utils.getFolderSize(rom.toString()) / (backupsize / 100)));
-                else break;
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
@@ -101,5 +92,7 @@ public class Restore extends AsyncTask<String, Integer, String> implements Const
         mWakeLock.release();
 
         utils.showProgressDialog("", false);
+
+        utils.toast(context.getString(R.string.done), context);
     }
 }

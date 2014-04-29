@@ -37,6 +37,7 @@ import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.activities.RomInformationActivity;
 import com.grarak.romswitcher.utils.Backup;
 import com.grarak.romswitcher.utils.Constants;
+import com.grarak.romswitcher.utils.Delete;
 import com.grarak.romswitcher.utils.RebootRom;
 import com.grarak.romswitcher.utils.Restore;
 import com.grarak.romswitcher.utils.RootUtils;
@@ -93,12 +94,8 @@ public class RomFragment extends PreferenceFragment implements Constants {
         PreferenceScreen mRomHeader = (PreferenceScreen) findPreference(KEY_ROM_HEADER);
         PreferenceCategory mAdvancedCategory = (PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY);
         if (currentFragment == 1) mRomHeader.removePreference(mAdvancedCategory);
-        else {
-
-            if (!utils.existfile(utils.dataPath + "/media/." + currentFragment + "rom"))
-                root.run("mkdir -p " + utils.dataPath + "/media/." + currentFragment + "rom");
-
-        }
+        else if (!utils.existfile("/data/media/." + String.valueOf(currentFragment) + "rom"))
+            root.run("mkdir -p /data/media/." + String.valueOf(currentFragment) + "rom");
 
     }
 
@@ -147,7 +144,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 ), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        root.run(String.valueOf("rm -rf " + utils.dataPath + "/media/." + currentFragment + "rom" + "/*"));
+                        new Delete("/data/media/." + String.valueOf(currentFragment) + "rom" + "/*", getActivity()).execute();
                     }
                 }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
@@ -177,29 +174,23 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 if (nameEdit.getText().toString().isEmpty()) {
                     utils.toast(getString(R.string.empty_name), getActivity());
                 } else {
-                    File backupFolder = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom/" + nameEdit.getText().toString());
+                    File backupFolder = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom/" + nameEdit.getText().toString() + ".tar");
                     if (!backupFolder.exists())
                         new Backup(getActivity(), nameEdit.getText().toString(), currentFragment).execute();
-                    else
-                        overwritebackup(nameEdit.getText().toString());
+                    else deletebackupfirst();
                 }
             }
         }).setView(layout).show();
     }
 
-    private void overwritebackup(final String name) {
+    private void deletebackupfirst() {
         AlertDialog.Builder warn = new AlertDialog.Builder(getActivity());
-        warn.setMessage(getString(R.string.overwrite_backup))
-                .setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+        warn.setMessage(getString(R.string.delete_backup_first))
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
-                }).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                new Backup(getActivity(), name, currentFragment).execute();
-            }
-        }).show();
+                }).show();
     }
 
     private int selected = 0;
@@ -213,7 +204,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
         if (backup.listFiles() != null) {
             if (backup.listFiles().length > 0) {
                 for (File file : backup.listFiles())
-                    listItems.add(file.getName());
+                    listItems.add(file.getName().replace(".tar", ""));
 
                 final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
 
@@ -235,7 +226,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
                         if (restore)
                             new Restore(getActivity(), choiceList[buffKey].toString(), currentFragment).execute();
                         else
-                            root.run("rm -rf " + backupPath + "/" + String.valueOf(currentFragment) + "rom/" + choiceList[buffKey].toString());
+                            new Delete(backupPath + "/" + String.valueOf(currentFragment) + "rom/" + choiceList[buffKey].toString() + ".tar", getActivity()).execute();
 
                     }
                 }).show();

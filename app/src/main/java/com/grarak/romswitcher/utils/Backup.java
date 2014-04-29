@@ -49,30 +49,19 @@ public class Backup extends AsyncTask<String, Integer, String> implements Consta
 
     @Override
     protected String doInBackground(String... strings) {
-        try {
-            File rom = new File(utils.dataPath + "/media/." + String.valueOf(currentFragment) + "rom");
-            String path = backupPath + "/" + String.valueOf(currentFragment) + "rom/" + name;
 
-            if (utils.existfile(path)) {
-                utils.deleteFile("rm -rf " + path.toLowerCase());
-                utils.deleteFile("rm -rf " + path);
-            }
-            root.run("mkdir -p " + path.toLowerCase());
+        File backup = new File("/data/media/backup.tar");
 
-            Thread.sleep(1000);
+        if (backup.exists()) root.run("rm -rf " + backup.toString());
 
-            root.run("cp -rf " + rom.toString() + "/* " + path + "/");
+        root.run("tar cf /data/media/backup.tar /data/media/." + currentFragment + "rom/*");
+        root.run("mkdir -p " + backupPath + "/" + currentFragment + "rom");
+        root.run("mv -f /data/media/backup.tar " + backupPath + "/" + currentFragment + "rom/" + name + ".tar");
 
-            long romsize = utils.getFolderSize(rom.toString());
+        long romsize = utils.getFolderSize("/data/media/." + currentFragment + "rom");
 
-            while (true)
-                if ((int) (utils.getFolderSize(path) / (romsize / 100)) <= 100)
-                    publishProgress((int) (utils.getFolderSize(path) / (romsize / 100)));
-                else break;
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        while (!utils.existfile(backupPath + "/" + currentFragment + "rom/" + name + ".tar"))
+            publishProgress((int) (backup.length() / (romsize / 100)));
 
         return null;
     }
@@ -104,6 +93,8 @@ public class Backup extends AsyncTask<String, Integer, String> implements Consta
         mWakeLock.release();
 
         utils.showProgressDialog("", false);
+
+        utils.toast(context.getString(R.string.done), context);
     }
 
 }

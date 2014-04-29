@@ -41,15 +41,10 @@ import java.util.zip.ZipInputStream;
 public class Utils implements Helpers, Constants {
 
     private String prefname = "settings";
-    public String dataPath = "/data";
 
     RootUtils root = new RootUtils();
 
     public static ProgressDialog ProgressDialog;
-
-    public Utils() {
-        dataPath = existfile("/.firstrom") ? "/.firstrom" : "/data";
-    }
 
     @Override
     public long getFolderSize(String folder) {

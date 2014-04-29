@@ -20,6 +20,7 @@
     <string name="you_sure">Are you sure?</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
+    <string name="ok">Ok</string>
 
     <!-- Unit -->
     <string name="mb">MB</string>
@@ -71,7 +72,7 @@
     <string name="backup_rom_summary">Please only use lowercase for the name of the backup.</string>
     <string name="backup_name">Name of backup</string>
     <string name="empty_name">Dude, name is blank!</string>
-    <string name="overwrite_backup">A backup with this name already exists. Do you want to overwrite it?</string>
+    <string name="delete_backup_first">A backup with this name already exists. Please delete it first.</string>
     <string name="backing_up">Backing up</string>
     <string name="restore">Restore</string>
     <string name="restore_rom">Restore ROM %d</string>
@@ -79,6 +80,7 @@
     <string name="restoring">Restoring</string>
     <string name="delete">Delete</string>
     <string name="delete_backup">Delete backups of ROM %d</string>
+    <string name="deleting">Deleting</string>
     <string name="rom_information">Information about ROM %d</string>
 
     <!-- Rom Information -->

@@ -17,7 +17,7 @@ package com.grarak.romswitcher.utils;
  */
 
 /*
- * Created by grarak's kitten (meow) on 06.04.14.
+ * Created by grarak's kitten (meow) on 23.04.14.
  */
 
 import android.content.Context;
@@ -26,51 +26,49 @@ import android.os.PowerManager;
 
 import com.grarak.romswitcher.R;
 
-public class RebootRom extends AsyncTask<String, Integer, String> implements Constants {
+public class Delete extends AsyncTask<String, Integer, Void> {
 
     private Utils utils = new Utils();
     private RootUtils root = new RootUtils();
-
-    private Context context;
-
-    private int currentFragment;
-
     private PowerManager.WakeLock mWakeLock;
 
-    public RebootRom(Context context, int currentFragment) {
+    private String path;
+    private Context context;
+
+    public Delete(String path, Context context) {
+        this.path = path;
         this.context = context;
-        this.currentFragment = currentFragment;
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        root.run("echo " + String.valueOf(currentFragment) + " > " + romFile);
-        root.run("echo 1 > " + nextbootFile);
+    protected Void doInBackground(String... strings) {
 
-        if (!utils.oneKernel() && (utils.isDefaultRom() || currentFragment == 1))
-            root.writePartition(currentFragment == 1 ? firstimage : secondimage, utils.getPartition("boot"));
+        root.run("rm -rf " + path);
+
+        while (!utils.existfile(path)) return null;
 
         return null;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        mWakeLock.release();
-        utils.showProgressDialog("", false);
-
-        root.reboot();
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
 
-        utils.showProgressDialog(context.getString(R.string.loading), true);
+        utils.showProgressDialog(context.getString(R.string.deleting), true);
 
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, context.getClass().getName());
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
         mWakeLock.acquire();
+    }
+
+    @Override
+    protected void onPostExecute(Void s) {
+        super.onPostExecute(s);
+        mWakeLock.release();
+
+        utils.showProgressDialog("", false);
+
+        utils.toast(context.getString(R.string.done), context);
     }
 
 }
