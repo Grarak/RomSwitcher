@@ -21,5 +21,4 @@ android {
 dependencies {
     compile 'com.android.support:support-v13:19.+'
     compile files('libs/RootTools-3.4.jar')
-    compile files('libs/jtar-1.1.jar')
 }

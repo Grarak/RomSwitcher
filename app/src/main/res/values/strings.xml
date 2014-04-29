@@ -67,7 +67,7 @@
     <string name="reboot_rom">Reboot into ROM %d</string>
     <string name="remove_rom">Remove ROM %d</string>
     <string name="advanced_settings">Advanced Settings</string>
-    <string name="advanced_settings_summary">Do not use these options if you are running this ROM currently!</string>
+    <string name="advanced_settings_summary">Please only use these options if you are running your default ROM!</string>
     <string name="backup_rom">Backup ROM %d</string>
     <string name="backup_rom_summary">Please only use lowercase for the name of the backup.</string>
     <string name="backup_name">Name of backup</string>
