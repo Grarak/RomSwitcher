@@ -50,19 +50,58 @@ public class RomInformationActivity extends Activity implements Constants {
     private Utils utils = new Utils();
     private RootUtils root = new RootUtils();
 
+    private final String[] requestprops = new String[]{
+            "ro.build.id", "ro.build.display", "ro.build.version.sdk",
+            "ro.build.version.release", "ro.build.date", "ro.product.model",
+            "ro.product.device", "ro.build.PDA", "ro.build.description"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rom_information);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        currentRom = getIntent().getExtras().getInt(ARG_SECTION_NUMBER);
+            currentRom = getIntent().getExtras().getInt(ARG_SECTION_NUMBER);
 
-        root.run("rm -f " + romswitcherPath + "/build.prop");
+            root.run("rm -f " + romswitcherPath + "/build.prop");
 
-        ((TextView) findViewById(R.id.rom_size)).setText(getString(R.string.rom_size, currentRom));
-        setSize();
+            ((TextView) findViewById(R.id.rom_size)).setText(getString(R.string.rom_size, currentRom));
+
+            String props = utils.readFile("/data/media/." + currentRom + "rom/system/build.prop");
+            setSize();
+
+            if (!props.isEmpty()) {
+
+                TextView buildproptitle = new TextView(this);
+                buildproptitle.setText(getString(R.string.build_prop, currentRom));
+                buildproptitle.setBackgroundColor(getResources().getColor(android.R.color.white));
+                buildproptitle.setGravity(Gravity.CENTER);
+                buildproptitle.setTypeface(null, Typeface.BOLD);
+
+                ((LinearLayout) findViewById(R.id.buildproplayout)).addView(buildproptitle);
+
+                TextView dummy = new TextView(this);
+                ((LinearLayout) findViewById(R.id.buildproplayout)).addView(dummy);
+
+                String[] proplist = props.split("\\r?\\n");
+
+                for (String prop : proplist)
+                    for (String requestprop : requestprops)
+                        if (prop.startsWith(requestprop + "=")) {
+                            TextView text = new TextView(this);
+                            text.setText(prop);
+                            text.setTextColor(getResources().getColor(android.R.color.white));
+                            ((LinearLayout) findViewById(R.id.buildproplayout)).addView(text);
+                        }
+
+            } else error();
+
+        } catch (IOException e) {
+            Log.e(TAG, "unable to read build.prop of ROM " + currentRom);
+            error();
+        }
     }
 
     private void setSize() {
@@ -95,41 +134,8 @@ public class RomInformationActivity extends Activity implements Constants {
     protected void onResume() {
         super.onResume();
         try {
-            ((LinearLayout) findViewById(R.id.buildproplayout)).removeAllViews();
             Thread.sleep(1000);
             utils.showProgressDialog("", false);
-            String props = utils.readFile("/data/media/." + currentRom + "rom/system/build.prop");
-            if (!props.isEmpty() && utils.existfile(romswitcherPath + "/build.prop")) {
-
-                TextView buildproptitle = new TextView(this);
-                buildproptitle.setText(getString(R.string.build_prop, currentRom));
-                buildproptitle.setBackgroundColor(getResources().getColor(android.R.color.white));
-                buildproptitle.setGravity(Gravity.CENTER);
-                buildproptitle.setTypeface(null, Typeface.BOLD);
-
-                ((LinearLayout) findViewById(R.id.buildproplayout)).addView(buildproptitle);
-
-                TextView dummy = new TextView(this);
-                ((LinearLayout) findViewById(R.id.buildproplayout)).addView(dummy);
-
-                String[] proplist = props.split("\\r?\\n");
-                String[] requestprops = new String[]{"ro.build.id", "ro.build.display", "ro.build.version.sdk",
-                        "ro.build.version.release", "ro.build.date", "ro.product.model", "ro.product.device",
-                        "ro.build.PDA", "ro.pac.version", "ro.cm.version", "ro.pa.version"};
-
-                for (String prop : proplist)
-                    for (String requestprop : requestprops)
-                        if (prop.startsWith(requestprop)) {
-                            TextView text = new TextView(this);
-                            text.setText(prop);
-                            text.setTextColor(getResources().getColor(android.R.color.white));
-                            ((LinearLayout) findViewById(R.id.buildproplayout)).addView(text);
-                        }
-
-            } else error();
-        } catch (IOException e) {
-            Log.e(TAG, "unable to read build.prop of ROM " + currentRom);
-            error();
         } catch (InterruptedException e) {
             e.printStackTrace();
             error();
