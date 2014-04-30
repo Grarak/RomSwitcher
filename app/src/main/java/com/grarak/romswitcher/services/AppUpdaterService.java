@@ -71,6 +71,8 @@ public class AppUpdaterService extends Service implements Constants {
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 Log.e(TAG, "unable to read app version");
+            } finally {
+                stopSelf();
             }
         }
     }
