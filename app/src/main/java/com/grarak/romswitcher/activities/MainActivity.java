@@ -49,14 +49,19 @@ public class MainActivity extends Activity implements Constants {
 
         /*
          * Code has been approved by AndreiLux!
-         * Let's meow together
+         * Let's meow together.
          */
 
-        if (!new Utils().existfile(romswitcherPath))
-            new File(romswitcherPath).mkdir();
+        // Create romswitcher path
+        if (!new Utils().existfile(romswitcherPath)) new File(romswitcherPath).mkdir();
 
+        // Animation
         overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
+
+        // Check if the user opens the app the first time
         if (new Utils().getBoolean("firstuse", true, getApplicationContext()) && new Utils().isDefaultRom()) {
+
+            // Let's begin the tutorial
             setContentView(R.layout.activity_main);
 
             SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -65,6 +70,7 @@ public class MainActivity extends Activity implements Constants {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             mViewPager.setOffscreenPageLimit(3);
 
+            // Viewpager Animation
             mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
                 @Override
                 public void transformPage(View page, float position) {
@@ -75,6 +81,7 @@ public class MainActivity extends Activity implements Constants {
             });
 
             mViewPager.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+
         } else {
             startActivity(new Intent(getApplicationContext(), RomSwitcherActivity.class));
             finish();

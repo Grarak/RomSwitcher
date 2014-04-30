@@ -54,6 +54,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.download_header);
 
+        // Get application version
         try {
             findPreference(KEY_APP_VERSION).setSummary(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
@@ -124,6 +125,10 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
                         getKernel = false;
                     } else
+                        /*
+                         * Restart application after downloading the configuration file,
+                         * thus the other fragments will appear without to add them again.
+                         */
                         utils.reset(getActivity());
                 }
             }

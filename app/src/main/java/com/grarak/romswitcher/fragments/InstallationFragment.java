@@ -72,11 +72,13 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         addPreferencesFromResource(R.xml.installation_header);
         context = getActivity();
 
+        // Initialize all Preferences
         mInstallHeader = (PreferenceScreen) findPreference(KEY_INSTALL_HEADER);
         mRecoveryCategory = (PreferenceCategory) findPreference(KEY_RECOVERY_CATEGORY);
         mRebootIntoRecovery = (PreferenceScreen) findPreference(KEY_REBOOT_INTO_RECOVERY);
         mInstallRecovery = (PreferenceScreen) findPreference(KEY_INSTALL_RECOVERY);
 
+        // Check if the devices support those features
         if (!(utils.rebootRecovery() || utils.installRecovery()))
             mInstallHeader.removePreference(mRecoveryCategory);
         if (!utils.rebootRecovery()) mRecoveryCategory.removePreference(mRebootIntoRecovery);
@@ -153,7 +155,6 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                              * We don't do anything just let the user think that we are installing something
                              * I like to troll (meow)
                              */
-
                             Thread.sleep(5);
                             if (i == 50) {
                                 if (utils.oneKernel()) {

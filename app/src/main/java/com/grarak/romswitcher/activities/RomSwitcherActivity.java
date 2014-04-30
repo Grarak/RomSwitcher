@@ -57,24 +57,25 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+         * Batman is coming nananananana
+         * Let's check for new application version
+         */
         startService(new Intent(getApplicationContext(), AppUpdaterService.class));
 
-        // Batman is coming nananananana
+        // Clear fragments otherwise fragments will be spammed with items after recreation
         fragments.clear();
         fragmentsname.clear();
 
-        if (!RootTools.isAccessGiven()) {
-            new Utils().toast(getString(R.string.noroot), getApplicationContext());
-            exit();
-        }
-
-        if (!RootTools.isBusyboxAvailable()) {
-            new Utils().toast(getString(R.string.nobusybox), getApplicationContext());
+        // Check if root or busybox is available
+        if (!RootTools.isAccessGiven() || !RootTools.isBusyboxAvailable()) {
+            new Utils().toast(getString(!RootTools.isAccessGiven() ? R.string.noroot : R.string.nobusybox), getApplicationContext());
             exit();
         }
 
         setContentView(R.layout.activity_romswitcher);
 
+        // Add fragments to list
         fragments.add(new DownloadFragment());
         fragmentsname.add(getString(R.string.download));
 
@@ -100,8 +101,7 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (actionBar != null)
-                    actionBar.setSelectedNavigationItem(position);
+                if (actionBar != null) actionBar.setSelectedNavigationItem(position);
             }
         });
 
@@ -113,9 +113,8 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
 
        /*
         * Initialize ProgressDialog in Utils just in case
-        * nasty hack to avoid ProgressDialog disappear after rotation
+        * nasty hack to avoid ProgressDialog disappear after recreation (rotation)
         */
-
         new Utils().createProgressDialog(this);
     }
 

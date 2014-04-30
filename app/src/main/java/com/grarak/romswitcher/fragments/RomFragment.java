@@ -83,6 +83,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
         currentFragment = getArguments().getInt(ARG_SECTION_NUMBER);
 
+        // Set titles of Preferences
         findPreference(KEY_ROM_CATEGORY).setTitle(getString(R.string.rom, currentFragment));
         findPreference(KEY_REBOOT_ROM).setTitle(getString(R.string.reboot_rom, currentFragment));
         findPreference(KEY_REMOVE_ROM).setTitle(getString(R.string.remove_rom, currentFragment));
@@ -201,7 +202,9 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
         List<String> listItems = new ArrayList<String>();
 
+        // Check if backup folder exists
         if (backup.listFiles() != null) {
+            // Check if backup folder contains anything
             if (backup.listFiles().length > 0) {
                 for (File file : backup.listFiles())
                     listItems.add(file.getName().replace(".tar", ""));
