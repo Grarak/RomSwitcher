@@ -21,6 +21,7 @@
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
     <string name="ok">Ok</string>
+    <string name="newappversion">New Application version!</string>
 
     <!-- Unit -->
     <string name="mb">MB</string>

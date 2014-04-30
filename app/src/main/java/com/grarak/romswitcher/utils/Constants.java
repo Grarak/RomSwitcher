@@ -47,6 +47,7 @@ public interface Constants {
 
     public String configurationFile = romswitcherPath + "/configuration.xml";
     public String configurationFileLink = "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/devices";
+    public String applink = "http://slideme.org/application/romswitcher";
 
     public String TAG = "RomSwitcher";
 

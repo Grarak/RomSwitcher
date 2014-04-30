@@ -47,9 +47,10 @@ public class MainActivity extends Activity implements Constants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Code has been approved by AndreiLux!
-
-        // Let's meow together
+        /*
+         * Code has been approved by AndreiLux!
+         * Let's meow together
+         */
 
         if (!new Utils().existfile(romswitcherPath))
             new File(romswitcherPath).mkdir();

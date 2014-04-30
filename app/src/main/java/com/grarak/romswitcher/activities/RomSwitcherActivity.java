@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -35,6 +36,7 @@ import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.fragments.DownloadFragment;
 import com.grarak.romswitcher.fragments.InstallationFragment;
 import com.grarak.romswitcher.fragments.RomFragment;
+import com.grarak.romswitcher.services.AppUpdaterService;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.Utils;
 import com.stericson.RootTools.RootTools;
@@ -54,6 +56,8 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startService(new Intent(getApplicationContext(), AppUpdaterService.class));
 
         // Batman is coming nananananana
         fragments.clear();

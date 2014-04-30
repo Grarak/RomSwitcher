@@ -26,6 +26,8 @@
         </activity>
         <activity android:name="com.grarak.romswitcher.activities.RomSwitcherActivity" />
         <activity android:name="com.grarak.romswitcher.activities.RomInformationActivity" />
+
+        <service android:name=".services.AppUpdaterService" />
     </application>
 
 </manifest>
