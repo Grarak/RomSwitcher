@@ -45,8 +45,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
     private final String KEY_DOWNLOAD_CONFIGURATION_FILE = "download_configuration_file";
     private final String KEY_DOWNLOAD_TOOLS = "download_tools";
 
-    private boolean getConfigurationFile = false;
-    private boolean getKernel = false;
+    private boolean getTools = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,20 +66,15 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == findPreference(KEY_DOWNLOAD_CONFIGURATION_FILE))
-            getConfigurationFile();
+            getConntect(configurationFileLink);
         else if (preference == findPreference(KEY_DOWNLOAD_TOOLS))
             if (utils.existfile(configurationFile)) {
-                getKernel = true;
-                getConfigurationFile();
+                getTools = true;
+                getConntect(configurationFileLink);
             } else
                 utils.toast(getString(R.string.download_configuration_first), getActivity());
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
-
-    private void getConfigurationFile() {
-        getConfigurationFile = true;
-        getConntect(configurationFileLink);
     }
 
     private void getConntect(String url) {
@@ -107,29 +101,24 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
             if (GetConnection.htmlstring.isEmpty() && !GetConnection.htmlstring.contains("<devices>"))
                 utils.toast(getString(R.string.noconnection), getActivity());
             else {
-                if (getConfigurationFile) {
+                if (getTools) {
+                    if (!utils.isSupported())
+                        utils.toast(getString(R.string.no_support), getActivity());
+                    else startDownload(getDownloadLink());
+
+                    getTools = false;
+                } else {
                     utils.deleteFile(configurationFile);
                     utils.writeFile(configurationFile, GetConnection.htmlstring);
-                    getConfigurationFile = false;
 
                     if (!utils.existfile(configurationFile))
                         utils.toast(getString(R.string.something_went_wrong), getActivity());
 
-                    RomSwitcherActivity.showProgress(false);
-
-                    if (getKernel) {
-                        if (!utils.isSupported())
-                            utils.toast(getString(R.string.no_support), getActivity());
-                        else
-                            startDownload(getDownloadLink());
-
-                        getKernel = false;
-                    } else
-                        /*
-                         * Restart application after downloading the configuration file,
-                         * thus the other fragments will appear without to add them again.
-                         */
-                        utils.reset(getActivity());
+                    /*
+                     * Restart application after downloading the configuration file,
+                     * thus the other fragments will appear without to add them again.
+                     */
+                    utils.reset(getActivity());
                 }
             }
         }
