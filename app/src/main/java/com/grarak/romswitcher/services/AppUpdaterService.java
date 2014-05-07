@@ -84,12 +84,8 @@ public class AppUpdaterService extends Service implements Constants {
         PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(Intent.ACTION_VIEW, Uri.parse(applink)), 0);
 
-        Notification notifyObj = new Notification(R.drawable.ic_launcher,
-                getString(R.string.newappversion),
-                System.currentTimeMillis());
-        notifyObj.setLatestEventInfo(getApplicationContext(),
-                getString(R.string.app_name),
-                getString(R.string.newappversion), intent);
+        Notification notifyObj = new Notification(R.drawable.ic_launcher, getString(R.string.newappversion), System.currentTimeMillis());
+        notifyObj.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), getString(R.string.newappversion), intent);
         notifyObj.number = ++count;
         notifyObj.flags |= Notification.FLAG_AUTO_CANCEL;
         notifyMgr.notify(2, notifyObj);
