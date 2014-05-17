@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.activities.RomSwitcherActivity;
+import com.grarak.romswitcher.utils.Connection;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.Download;
 import com.grarak.romswitcher.utils.Utils;
@@ -78,14 +79,14 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
     private void getConntect(String url) {
         utils.getConnection(url);
-        new Connection().execute();
+        new GetConnection().execute();
     }
 
-    private class Connection extends AsyncTask<String, Void, String> {
+    private class GetConnection extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            return com.grarak.romswitcher.utils.Connection.htmlstring;
+            return Connection.htmlstring;
         }
 
         @Override
@@ -97,7 +98,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         @Override
         protected void onPostExecute(String result) {
             RomSwitcherActivity.showProgress(false);
-            if (com.grarak.romswitcher.utils.Connection.htmlstring.isEmpty() && !com.grarak.romswitcher.utils.Connection.htmlstring.contains("<devices>"))
+            if (Connection.htmlstring.isEmpty() && !Connection.htmlstring.contains("<devices>"))
                 utils.toast(getString(R.string.noconnection), getActivity());
             else {
                 if (getTools) {
@@ -108,7 +109,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
                     getTools = false;
                 } else {
                     utils.deleteFile(configurationFile);
-                    utils.writeFile(configurationFile, com.grarak.romswitcher.utils.Connection.htmlstring);
+                    utils.writeFile(configurationFile, Connection.htmlstring);
 
                     if (!utils.existfile(configurationFile))
                         utils.toast(getString(R.string.something_went_wrong), getActivity());
