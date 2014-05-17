@@ -37,7 +37,7 @@ import java.net.URL;
 
 import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
 
-public class StartDownload extends AsyncTask<String, Integer, String> implements Constants {
+public class Download extends AsyncTask<String, Integer, String> implements Constants {
 
     private Context context;
     private PowerManager.WakeLock mWakeLock;
@@ -45,7 +45,7 @@ public class StartDownload extends AsyncTask<String, Integer, String> implements
     private String name;
     private Utils utils;
 
-    public StartDownload(Context context, String path, String name) {
+    public Download(Context context, String path, String name) {
         this.context = context;
         this.path = path;
         this.name = name;

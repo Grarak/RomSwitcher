@@ -31,8 +31,8 @@ import android.util.Log;
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.activities.RomSwitcherActivity;
 import com.grarak.romswitcher.utils.Constants;
+import com.grarak.romswitcher.utils.Download;
 import com.grarak.romswitcher.utils.GetConnection;
-import com.grarak.romswitcher.utils.StartDownload;
 import com.grarak.romswitcher.utils.Utils;
 
 public class DownloadFragment extends PreferenceFragment implements Constants {
@@ -137,7 +137,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
     }
 
     private void startDownload(String url) {
-        StartDownload downloadTask = new StartDownload(getActivity(), downloadPath, "tools.zip");
+        Download downloadTask = new Download(getActivity(), downloadPath, "tools.zip");
         downloadTask.execute(url);
     }
 
