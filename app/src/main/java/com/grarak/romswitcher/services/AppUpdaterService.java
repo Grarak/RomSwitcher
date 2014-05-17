@@ -33,7 +33,6 @@ import android.util.Log;
 
 import com.grarak.romswitcher.R;
 import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.GetConnection;
 import com.grarak.romswitcher.utils.Utils;
 
 public class AppUpdaterService extends Service implements Constants {
@@ -56,13 +55,13 @@ public class AppUpdaterService extends Service implements Constants {
 
         @Override
         protected String doInBackground(String... params) {
-            return GetConnection.htmlstring;
+            return com.grarak.romswitcher.utils.Connection.htmlstring;
         }
 
         @Override
         protected void onPostExecute(String result) {
             try {
-                String output = GetConnection.htmlstring;
+                String output = com.grarak.romswitcher.utils.Connection.htmlstring;
                 if (!output.isEmpty()) {
                     // Pull the version code of html return
                     String lastversion = output.split("RomSwitcher <span class=\"version\">v")[1].split("</span>")[0];

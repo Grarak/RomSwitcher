@@ -367,8 +367,8 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public void getConnection(String url) {
-        GetConnection.htmlstring = "";
-        new GetConnection().execute(url);
+        Connection.htmlstring = "";
+        new Connection().execute(url);
     }
 
     @Override
