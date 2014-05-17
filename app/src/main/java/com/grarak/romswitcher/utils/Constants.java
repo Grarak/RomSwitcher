@@ -21,11 +21,10 @@ package com.grarak.romswitcher.utils;
  */
 
 import android.os.Build;
-import android.os.Environment;
 
 public interface Constants {
 
-    public String externalStorage = Environment.getExternalStorageDirectory().getPath();
+    public String externalStorage = "/sdcard";
     public String romswitcherPath = externalStorage + "/romswitcher";
     public String downloadPath = romswitcherPath + "/downloads";
     public String toolfile = downloadPath + "/tools.zip";

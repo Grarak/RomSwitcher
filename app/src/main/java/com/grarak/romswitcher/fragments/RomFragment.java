@@ -44,6 +44,8 @@ import com.grarak.romswitcher.utils.RootUtils;
 import com.grarak.romswitcher.utils.Utils;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,6 +246,22 @@ public class RomFragment extends PreferenceFragment implements Constants {
         args.putInt(ARG_SECTION_NUMBER, currentFragment);
         info.putExtras(args);
         startActivity(info);
+
+    }
+
+    private int chmod(String path, int mode) {
+        try {
+            Class fileUtils = Class.forName("android.os.FileUtils");
+            Method setPermissions = fileUtils.getMethod("setPermissions",
+                    String.class, int.class, int.class, int.class);
+            return (Integer) setPermissions.invoke(null, new File(path).getAbsolutePath(),
+                    mode, -1, -1);
+        } catch (ClassNotFoundException e) {
+        } catch (NoSuchMethodException e) {
+        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException e) {
+        }
+        return 0;
     }
 
 }

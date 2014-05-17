@@ -148,21 +148,18 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         protected String doInBackground(String... sUrl) {
             if (installTools) {
                 if (utils.unZip(downloadPath + "/", "tools.zip")) {
+                    if (utils.oneKernel()) {
+                        if (utils.existfile(onekernelImage)) {
+                            root.writePartition(onekernelImage, utils.getPartition("boot"));
+                        } else return "error";
+                    } else root.readPartition(utils.getPartition("boot"), firstimage);
+                    /*
+                     * We don't do anything just let the user think that we are installing something
+                     * I like to troll (meow)
+                     */
                     for (int i = 0; i < 100; i++) {
                         try {
-
-                            /*
-                             * We don't do anything just let the user think that we are installing something
-                             * I like to troll (meow)
-                             */
-                            Thread.sleep(5);
-                            if (i == 50) {
-                                if (utils.oneKernel()) {
-                                    if (utils.existfile(onekernelImage))
-                                        root.writePartition(onekernelImage, utils.getPartition("boot"));
-                                    else return "error";
-                                } else root.readPartition(utils.getPartition("boot"), firstimage);
-                            }
+                            Thread.sleep(50);
                             publishProgress(i);
                         } catch (InterruptedException e) {
                             e.printStackTrace();

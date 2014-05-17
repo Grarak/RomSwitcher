@@ -202,18 +202,20 @@ public class Utils implements Helpers, Constants {
          * And still only supports 4.3 and 4.4 (die die die! meow)
          */
 
+        String output = "0";
+
         File[] rootfiles = new File("/").listFiles();
-        File fstab = null;
+        String fstab = "";
         if (rootfiles != null) {
             for (File file : rootfiles)
                 if (file.getName().contains("fstab") && !file.getName().equals("fstab.goldfish"))
-                    fstab = file;
+                    fstab = file.getName();
             try {
                 if (fstab != null) {
                     root.run("mount -o rw,remount /");
-                    root.run("chmod 777 " + fstab.getAbsolutePath());
+                    root.run("chmod 777 /" + fstab);
 
-                    String[] fstabvalues = readFile(fstab.getAbsolutePath()).split("\\r?\\n");
+                    String[] fstabvalues = readFile("/" + fstab).split("\\r?\\n");
 
                     String par = "";
 
@@ -221,24 +223,26 @@ public class Utils implements Helpers, Constants {
                         if (partitionline.contains(partition))
                             par = partitionline.split(" ")[0];
 
-                    if (!par.isEmpty()) return par;
+                    if (!par.isEmpty()) output = par;
                     else {
                         if (existfile("/file_contexts")) {
                             String[] filecontextvalues = readFile("file_contexts").split("\\r?\\n");
 
                             for (String partitionline : filecontextvalues)
                                 if (partitionline.contains(partition + "blk"))
-                                    return partitionline.split(" ")[0];
+                                    output = partitionline.split(" ")[0];
                         }
                     }
+                    root.run("mount -o ro,remount /");
                 }
             } catch (IOException e) {
-                Log.e(TAG, "unable to read fstab file: " + fstab.getAbsolutePath());
-                return fstab.getAbsolutePath();
+                Log.e(TAG, "unable to read fstab file: " + fstab);
+                root.run("mount -o ro,remount /");
+                return getPartition(partition);
             }
         }
 
-        return "0";
+        return output.equals("0") ? getPartition(partition) : output;
     }
 
     @Override
