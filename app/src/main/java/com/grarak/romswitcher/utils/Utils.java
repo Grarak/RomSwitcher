@@ -151,6 +151,17 @@ public class Utils implements Helpers, Constants {
     }
 
     @Override
+    public String getDevNote() {
+        if (existfile(configurationFile))
+            try {
+                return getDeviceConfig(readFile(configurationFile), "note").replace("\\n", "\n"); // Ugly hack to show next line
+            } catch (IOException e) {
+                Log.e(TAG, "unable to read configuration file");
+            }
+        return "";
+    }
+
+    @Override
     public boolean manualBoot() {
         if (existfile(configurationFile))
             try {

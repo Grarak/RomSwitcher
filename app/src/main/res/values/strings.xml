@@ -48,6 +48,7 @@
 
     <!-- Installation -->
     <string name="installation">Installation</string>
+    <string name="dev_notes">Note from Developer</string>
     <string name="install_tools">Install tools</string>
     <string name="install_tools_summary">Install the required files. Do this always after you downloaded the tools.</string>
     <string name="recovery">Recovery</string>

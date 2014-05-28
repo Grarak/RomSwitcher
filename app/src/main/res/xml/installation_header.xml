@@ -3,7 +3,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="install_header">
 
-    <PreferenceCategory android:title="@string/installation">
+    <PreferenceCategory
+        android:title="@string/installation"
+        android:key="install_category">
+
+        <PreferenceScreen
+            android:key="dev_notes"
+            android:title="@string/dev_notes" />
 
         <PreferenceScreen
             android:key="install_tools"

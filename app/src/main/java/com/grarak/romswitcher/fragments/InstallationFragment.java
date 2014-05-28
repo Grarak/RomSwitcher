@@ -47,6 +47,10 @@ public class InstallationFragment extends PreferenceFragment implements Constant
     private Utils utils = new Utils();
     private RootUtils root = new RootUtils();
 
+    private final String dev_note = utils.getDevNote();
+
+    private final String KEY_INSTALL_CATEGORY = "install_category";
+    private final String KEY_DEV_NOTES = "dev_notes";
     private final String KEY_INSTALL_HEADER = "install_header";
     private final String KEY_INSTALL_TOOLS = "install_tools";
     private final String KEY_RECOVERY_CATEGORY = "recovery_category";
@@ -56,6 +60,8 @@ public class InstallationFragment extends PreferenceFragment implements Constant
     private final String KEY_MANUALBOOT = "manualboot";
     private final String KEY_APPSHARING = "appsharing";
 
+    private PreferenceCategory mInstallCategory;
+    private PreferenceScreen mDevNotesHeader;
     private PreferenceScreen mInstallHeader;
     private PreferenceCategory mRecoveryCategory;
     private PreferenceScreen mRebootIntoRecovery;
@@ -73,10 +79,17 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         context = getActivity();
 
         // Initialize all Preferences
+        mInstallCategory = (PreferenceCategory) findPreference(KEY_INSTALL_CATEGORY);
+        mDevNotesHeader = (PreferenceScreen) findPreference(KEY_DEV_NOTES);
         mInstallHeader = (PreferenceScreen) findPreference(KEY_INSTALL_HEADER);
         mRecoveryCategory = (PreferenceCategory) findPreference(KEY_RECOVERY_CATEGORY);
         mRebootIntoRecovery = (PreferenceScreen) findPreference(KEY_REBOOT_INTO_RECOVERY);
         mInstallRecovery = (PreferenceScreen) findPreference(KEY_INSTALL_RECOVERY);
+
+        if (!dev_note.equals("0") && !dev_note.isEmpty())
+            mDevNotesHeader.setSummary(dev_note);
+        else
+            mInstallCategory.removePreference(mDevNotesHeader);
 
         // Check if the devices support those features
         if (!(utils.rebootRecovery() || utils.installRecovery()))
@@ -100,24 +113,25 @@ public class InstallationFragment extends PreferenceFragment implements Constant
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (!utils.existfile(configurationFile))
-            utils.toast(getString(R.string.download_configuration_first), getActivity());
-        else {
-            if (preference == findPreference(KEY_INSTALL_TOOLS))
-                if (utils.existfile(toolfile)) {
-                    if (utils.oneKernel())
-                        checkPartition("boot", "tools");
-                    else
-                        installTools();
-                } else
-                    utils.toast(getString(R.string.download_tools_first), getActivity());
-            else if (!utils.isRSInstalled())
-                utils.toast(getString(R.string.install_tools_first), getActivity());
-            else if (preference == findPreference(KEY_REBOOT_INTO_RECOVERY))
-                checkReboot(true);
-            else if (preference == findPreference(KEY_INSTALL_RECOVERY))
-                checkPartition("recovery", "recovery");
-        }
+        if (preference != mDevNotesHeader)
+            if (!utils.existfile(configurationFile))
+                utils.toast(getString(R.string.download_configuration_first), getActivity());
+            else {
+                if (preference == findPreference(KEY_INSTALL_TOOLS))
+                    if (utils.existfile(toolfile)) {
+                        if (utils.oneKernel())
+                            checkPartition("boot", "tools");
+                        else
+                            installTools();
+                    } else
+                        utils.toast(getString(R.string.download_tools_first), getActivity());
+                else if (!utils.isRSInstalled())
+                    utils.toast(getString(R.string.install_tools_first), getActivity());
+                else if (preference == findPreference(KEY_REBOOT_INTO_RECOVERY))
+                    checkReboot(true);
+                else if (preference == findPreference(KEY_INSTALL_RECOVERY))
+                    checkPartition("recovery", "recovery");
+            }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

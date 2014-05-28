@@ -45,6 +45,8 @@ public interface Helpers {
 
     public boolean unZip(String path, String name);
 
+    public String getDevNote();
+
     public boolean manualBoot();
 
     public boolean installRecovery();
