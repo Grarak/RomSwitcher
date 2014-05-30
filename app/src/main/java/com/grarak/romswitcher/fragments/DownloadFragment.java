@@ -59,6 +59,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "unable to read app version");
         }
+
         findPreference(KEY_CURRENT_VERSION).setSummary(getCurrentVersion());
         findPreference(KEY_LAST_VERSION).setSummary(getLastVersion());
     }

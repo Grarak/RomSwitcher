@@ -50,6 +50,7 @@ public class RomInformationActivity extends Activity implements Constants {
     private Utils utils = new Utils();
     private RootUtils root = new RootUtils();
 
+    // Build prop items which should appear
     private final String[] requestprops = new String[]{
             "ro.build.id", "ro.build.display", "ro.build.version.sdk",
             "ro.build.version.release", "ro.build.date", "ro.product.model",

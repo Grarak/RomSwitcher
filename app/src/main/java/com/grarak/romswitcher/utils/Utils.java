@@ -41,26 +41,21 @@ import java.util.zip.ZipInputStream;
 public class Utils implements Helpers, Constants {
 
     private String prefname = "settings";
-
     RootUtils root = new RootUtils();
-
     public static ProgressDialog ProgressDialog;
 
     @Override
     public long getFolderSize(String folder) {
-        long size = 0;
 
         /*
          * Stupid if statement!
          * Why it just don't return 0 when the folder is empty?!
          */
 
+        long size = 0;
         if (new File(folder).listFiles() != null)
             for (File file : new File(folder).listFiles())
-                if (file.isDirectory())
-                    size += getFolderSize(file.toString());
-                else
-                    size += file.length();
+                size += file.isDirectory() ? getFolderSize(file.toString()) : file.length();
 
         return size;
     }
@@ -105,14 +100,14 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public void reset(Activity activity) {
-        if (activity == null)
-            return;
-        final int enter_anim = android.R.anim.fade_in;
-        final int exit_anim = android.R.anim.fade_out;
-        activity.overridePendingTransition(enter_anim, exit_anim);
-        activity.finish();
-        activity.overridePendingTransition(enter_anim, exit_anim);
-        activity.startActivity(activity.getIntent());
+        if (activity != null) {
+            final int enter_anim = android.R.anim.fade_in;
+            final int exit_anim = android.R.anim.fade_out;
+            activity.overridePendingTransition(enter_anim, exit_anim);
+            activity.finish();
+            activity.overridePendingTransition(enter_anim, exit_anim);
+            activity.startActivity(activity.getIntent());
+        }
     }
 
     @Override
@@ -152,57 +147,27 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String getDevNote() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "note").replace("\\n", "\n"); // Ugly hack to show next line
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return "";
+        return getDeviceConfig("note").replace("\\n", "\n"); // Ugly hack to show next line
     }
 
     @Override
     public boolean manualBoot() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "manualboot").equals("1");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return false;
+        return getDeviceConfig("manualboot").equals("1");
     }
 
     @Override
     public boolean installRecovery() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "installrecovery").equals("1");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return false;
+        return getDeviceConfig("installrecovery").equals("1");
     }
 
     @Override
     public boolean rebootRecovery() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "rebootrecovery").equals("1");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return false;
+        return getDeviceConfig("rebootrecovery").equals("1");
     }
 
     @Override
     public boolean oneKernel() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "onekernel").equals("1");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return false;
+        return getDeviceConfig("onekernel").equals("1");
     }
 
     @Override
@@ -258,13 +223,7 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public int getRomNumber() {
-        if (existfile(configurationFile))
-            try {
-                return Integer.parseInt(getDeviceConfig(readFile(configurationFile), "roms"));
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return 0;
+        return Integer.parseInt(getDeviceConfig("roms"));
     }
 
     @Override
@@ -284,33 +243,28 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String getLastVersion() {
-        if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "version");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
-        return "";
+        return getDeviceConfig("version");
     }
 
     @Override
     public String getDownloadLink() {
         if (existfile(configurationFile))
-            try {
-                return getDeviceConfig(readFile(configurationFile), "download");
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read configuration file");
-            }
+            return getDeviceConfig("download");
         return "";
     }
 
-    private String getDeviceConfig(String configuration, String value) {
-        if (configuration.contains("<devices>") && isSupported()) {
-            String deviceConfig = configuration.split("<devices>")[1].split("</devices>")[0].split("<" + model(configuration))[1].split("/>")[0];
-            if (deviceConfig.contains(value)) {
-                String deviceValue = deviceConfig.split(value + "=\"")[1].split("\"")[0];
-                if (!deviceConfig.isEmpty()) return deviceValue;
+    private String getDeviceConfig(String value) {
+        try {
+            String configuration = readFile(configurationFile);
+            if (configuration.contains("<devices>") && isSupported()) {
+                String deviceConfig = configuration.split("<devices>")[1].split("</devices>")[0].split("<" + model(configuration))[1].split("/>")[0];
+                if (deviceConfig.contains(value)) {
+                    String deviceValue = deviceConfig.split(value + "=\"")[1].split("\"")[0];
+                    if (!deviceConfig.isEmpty()) return deviceValue;
+                }
             }
+        } catch (IOException e) {
+            Log.e(TAG, "unable to read configuration file");
         }
         return "0";
     }
@@ -326,8 +280,7 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String readFile(String filepath) throws IOException {
-        BufferedReader buffreader = new BufferedReader(
-                new FileReader(filepath), 256);
+        BufferedReader buffreader = new BufferedReader(new FileReader(filepath), 256);
         String line;
         StringBuilder text = new StringBuilder();
         while ((line = buffreader.readLine()) != null) {
@@ -384,25 +337,21 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String getString(String name, String defaults, Context context) {
-        return context.getSharedPreferences(prefname, 0).getString(name,
-                defaults);
+        return context.getSharedPreferences(prefname, 0).getString(name, defaults);
     }
 
     @Override
     public void saveString(String name, String value, Context context) {
-        context.getSharedPreferences(prefname, 0).edit().putString(name, value)
-                .commit();
+        context.getSharedPreferences(prefname, 0).edit().putString(name, value).commit();
     }
 
     @Override
     public boolean getBoolean(String name, boolean defaults, Context context) {
-        return context.getSharedPreferences(prefname, 0).getBoolean(name,
-                defaults);
+        return context.getSharedPreferences(prefname, 0).getBoolean(name, defaults);
     }
 
     @Override
     public void saveBoolean(String name, boolean value, Context context) {
-        context.getSharedPreferences(prefname, 0).edit().putBoolean(name, value)
-                .commit();
+        context.getSharedPreferences(prefname, 0).edit().putBoolean(name, value).commit();
     }
 }

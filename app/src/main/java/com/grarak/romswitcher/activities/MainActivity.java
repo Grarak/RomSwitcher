@@ -127,9 +127,6 @@ public class MainActivity extends Activity implements Constants {
             return fragment;
         }
 
-        public WelcomeFragment() {
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -137,6 +134,7 @@ public class MainActivity extends Activity implements Constants {
             if (bundle == null) throw new AssertionError();
             final int position = bundle.getInt(ARG_SECTION_NUMBER, 0);
 
+            // Each fragment has a different layout
             int layout = R.layout.fragment_welcome;
             switch (position) {
                 case 1:
@@ -147,6 +145,7 @@ public class MainActivity extends Activity implements Constants {
                     break;
                 case 3:
                     layout = R.layout.fragment_finish;
+                    break;
             }
 
             View rootView = inflater.inflate(layout, container, false);

@@ -32,6 +32,7 @@ import java.util.concurrent.TimeoutException;
 public class RootUtils implements Constants {
 
     public void run(String command) {
+
         // Let's take over the world with my cuteness (meow meow)
         try {
             RootTools.getShell(true).add(new CommandCapture(0, command))
@@ -39,6 +40,7 @@ public class RootUtils implements Constants {
         } catch (IOException e) {
             Log.e(TAG, "failed to run " + command);
         } catch (TimeoutException ignored) {
+            Log.e(TAG, "Timeout: Cannot gain root access");
         } catch (RootDeniedException e) {
             Log.e(TAG, "Root access denied");
         }

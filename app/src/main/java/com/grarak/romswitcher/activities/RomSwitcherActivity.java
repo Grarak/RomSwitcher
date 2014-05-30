@@ -111,10 +111,11 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
             if (actionBar != null)
                 actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 
-       /*
-        * Initialize ProgressDialog in Utils just in case
-        * nasty hack to avoid ProgressDialog disappear after recreation (rotation)
-        */
+        /*
+         * Initialize ProgressDialog in Utils just in case
+         * nasty hack to avoid ProgressDialog disappear after recreation (rotation).
+         * That shouldn't happen anymore.
+         */
         new Utils().createProgressDialog(this);
     }
 
