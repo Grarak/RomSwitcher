@@ -129,6 +129,11 @@ public class FileBrowserActivity extends Activity implements Constants {
                     }).setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+
+                            /*
+                             * This is an Activity which should return something,
+                             * thus we set result as the selected file.
+                             */
                             Intent intent = new Intent();
                             intent.putExtra(ARG_RESULT, file.getAbsolutePath());
                             setResult(Activity.RESULT_OK, intent);

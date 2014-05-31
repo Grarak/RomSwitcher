@@ -211,14 +211,15 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private int buffKey = 0;
 
     private void showBackupList(final boolean restore) {
-        File backup = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom");
+        File folder = new File(backupPath + "/" + String.valueOf(currentFragment) + "rom");
 
         List<String> listItems = new ArrayList<String>();
 
-        // Check if backup folder exists
-        if (backup.listFiles() != null) {
-            if (backup.listFiles().length > 0) {
-                for (File file : backup.listFiles())
+        // Check if folder exists
+        if (folder.listFiles() != null) {
+            // Check if folder contains anything
+            if (folder.listFiles().length > 0) {
+                for (File file : folder.listFiles())
                     listItems.add(file.getName().replace(".tar", ""));
 
                 final CharSequence[] choiceList = listItems.toArray(new CharSequence[listItems.size()]);
@@ -263,10 +264,11 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check if the resultcode is correct
         if (requestCode == 1)
             if (resultCode == Activity.RESULT_OK) {
                 try {
-
+                    // Unpack kernel
                     String result = data.getStringExtra(ARG_RESULT);
                     new File(kexecPath + "/" + currentFragment + "rom").mkdirs();
 
@@ -300,7 +302,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
                 } catch (IOException e) {
                     Log.e(TAG, "unable to read " + kexecPath + "/" + currentFragment + "rom/boot.img-base");
                 }
-
             }
     }
 }
