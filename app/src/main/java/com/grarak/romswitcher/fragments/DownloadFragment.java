@@ -35,6 +35,8 @@ import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.Download;
 import com.grarak.romswitcher.utils.Utils;
 
+import java.io.File;
+
 public class DownloadFragment extends PreferenceFragment implements Constants {
 
     private Utils utils = new Utils();
@@ -62,7 +64,15 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
         findPreference(KEY_CURRENT_VERSION).setSummary(getCurrentVersion());
         findPreference(KEY_LAST_VERSION).setSummary(getLastVersion());
+
+        // Copy Assets files if using kexec hardboot
+        if (utils.kexecHardboot()) {
+            if (!new Utils().existfile(kexecPath)) new File(kexecPath).mkdir();
+            for (String asset : assets)
+                utils.copyAssets(kexecPath, asset, getActivity());
+        }
     }
+
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {

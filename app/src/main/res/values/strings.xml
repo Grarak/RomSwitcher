@@ -67,9 +67,12 @@
     <!-- Rom -->
     <string name="rom">ROM %d</string>
     <string name="reboot_rom">Reboot into ROM %d</string>
-    <string name="remove_rom">Remove ROM %d</string>
     <string name="advanced_settings">Advanced Settings</string>
     <string name="advanced_settings_summary">Please only use these options if you are running your default ROM!</string>
+    <string name="choose_kernel">Choose kernel of ROM %d</string>
+    <string name="choose_kernel_summary">Select a kernel which ROM %d should use.</string>
+    <string name="choose_kernel_error">You didn\'t select a compatible kernel!</string>
+    <string name="remove_rom">Remove ROM %d</string>
     <string name="backup_rom">Backup ROM %d</string>
     <string name="backup_rom_summary">Please only use lowercase for the name of the backup.</string>
     <string name="backup_name">Name of backup</string>
@@ -89,5 +92,11 @@
     <string name="rom_error">ROM %d is not installed or corrupted</string>
     <string name="build_prop">Build prop information of ROM %d</string>
     <string name="rom_size">Size of ROM %d</string>
+
+    <!-- File Browser -->
+    <string name="files">files</string>
+    <string name="show_all">Show all files</string>
+    <string name="directory_empty">Directory empty</string>
+    <string name="make_sure">Are you sure you want to select %s?</string>
 
 </resources>

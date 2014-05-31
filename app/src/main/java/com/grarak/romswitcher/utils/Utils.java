@@ -23,6 +23,7 @@ package com.grarak.romswitcher.utils;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -43,6 +45,28 @@ public class Utils implements Helpers, Constants {
     private String prefname = "settings";
     RootUtils root = new RootUtils();
     public static ProgressDialog ProgressDialog;
+
+    @Override
+    public void copyAssets(String path, String file, Context context) {
+        AssetManager assetManager = context.getAssets();
+        InputStream in;
+        OutputStream out;
+        try {
+            in = assetManager.open(file);
+            File outFile = new File(path, file);
+            out = new FileOutputStream(outFile);
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            Log.e(TAG, "failed to copy asset file: " + file + " to " + path);
+        }
+    }
 
     @Override
     public long getFolderSize(String folder) {
@@ -146,6 +170,16 @@ public class Utils implements Helpers, Constants {
     }
 
     @Override
+    public boolean useDtb() {
+        return getDeviceConfig("dtb").equals("1");
+    }
+
+    @Override
+    public String getKernelBase() {
+        return getDeviceConfig("kernelbase").replace("\\n", "\n");
+    }
+
+    @Override
     public String getDevNote() {
         return getDeviceConfig("note").replace("\\n", "\n"); // Ugly hack to show next line
     }
@@ -163,6 +197,11 @@ public class Utils implements Helpers, Constants {
     @Override
     public boolean rebootRecovery() {
         return getDeviceConfig("rebootrecovery").equals("1");
+    }
+
+    @Override
+    public boolean kexecHardboot() {
+        return !getDeviceConfig("kexechardboot").equals("0");
     }
 
     @Override

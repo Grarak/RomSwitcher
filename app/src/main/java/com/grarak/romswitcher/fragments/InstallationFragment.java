@@ -47,8 +47,6 @@ public class InstallationFragment extends PreferenceFragment implements Constant
     private Utils utils = new Utils();
     private RootUtils root = new RootUtils();
 
-    private final String dev_note = utils.getDevNote();
-
     private final String KEY_INSTALL_CATEGORY = "install_category";
     private final String KEY_DEV_NOTES = "dev_notes";
     private final String KEY_INSTALL_HEADER = "install_header";
@@ -86,6 +84,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         mRebootIntoRecovery = (PreferenceScreen) findPreference(KEY_REBOOT_INTO_RECOVERY);
         mInstallRecovery = (PreferenceScreen) findPreference(KEY_INSTALL_RECOVERY);
 
+        String dev_note = utils.getDevNote();
         if (!dev_note.equals("0") && !dev_note.isEmpty())
             mDevNotesHeader.setSummary(dev_note);
         else
@@ -162,11 +161,14 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         protected String doInBackground(String... sUrl) {
             if (installTools) {
                 if (utils.unZip(downloadPath + "/", "tools.zip")) {
-                    if (utils.oneKernel()) {
+                    if (utils.oneKernel() || utils.kexecHardboot()) {
                         if (utils.existfile(onekernelImage)) {
                             root.writePartition(onekernelImage, utils.getPartition("boot"));
+                            if (utils.kexecHardboot())
+                                root.run(kexecPath + "/unpackbootimg -i " + onekernelImage + " -o " + downloadPath);
                         } else return "error";
                     } else root.readPartition(utils.getPartition("boot"), firstimage);
+
                     /*
                      * We don't do anything just let the user think that we are installing something
                      * I like to troll (meow)

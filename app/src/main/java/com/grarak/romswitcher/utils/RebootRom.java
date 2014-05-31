@@ -47,7 +47,14 @@ public class RebootRom extends AsyncTask<String, Integer, String> implements Con
         root.run("echo " + String.valueOf(currentFragment) + " > " + romFile);
         root.run("echo 1 > " + nextbootFile);
 
-        if (!utils.oneKernel() && (utils.isDefaultRom() || currentFragment == 1))
+        if (utils.kexecHardboot()) {
+            String zImage = kexecPath + "/" + currentFragment + "rom/zImage";
+            String kexeccommand = kexecPath + "/kexec --load-hardboot " + zImage + " --initrd=" + kexecRamdik + " --mem-min=" + utils.kexecHardboot() + " --command-line=\"$(cat /proc/cmdline)\"";
+            if (utils.useDtb()) kexeccommand = kexeccommand + " --dtb";
+            root.run(kexeccommand);
+        }
+
+        if (!utils.kexecHardboot() && !utils.oneKernel() && (utils.isDefaultRom() || currentFragment == 1))
             root.writePartition(currentFragment == 1 ? firstimage : secondimage, utils.getPartition("boot"));
 
         return null;
@@ -59,7 +66,8 @@ public class RebootRom extends AsyncTask<String, Integer, String> implements Con
         mWakeLock.release();
         utils.showProgressDialog("", false);
 
-        root.reboot();
+        if (utils.kexecHardboot()) root.run(kexecPath + "/kexec -e");
+        else root.reboot();
     }
 
     @Override

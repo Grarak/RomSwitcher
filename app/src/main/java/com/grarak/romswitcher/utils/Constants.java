@@ -24,33 +24,37 @@ import android.os.Build;
 
 public interface Constants {
 
-    public String externalStorage = "/sdcard";
-    public String romswitcherPath = externalStorage + "/romswitcher";
-    public String downloadPath = romswitcherPath + "/downloads";
-    public String toolfile = downloadPath + "/tools.zip";
-    public String backupPath = "/data/media/.romswitcher/backup";
+    public final String externalStorage = "/sdcard";
+    public final String romswitcherPath = externalStorage + "/romswitcher";
+    public final String downloadPath = romswitcherPath + "/downloads";
+    public final String toolfile = downloadPath + "/tools.zip";
+    public final String backupPath = "/data/media/.romswitcher/backup";
 
-    public String firstimage = downloadPath + "/first.img";
-    public String secondimage = downloadPath + "/second.img";
-    public String onekernelInstalledFile = "/sbin/mount_recovery.sh";
-    public String onekernelImage = downloadPath + "/boot.img";
-    public String rebootRecoveryFile = "/data/media/rebootrs";
-    public String romFile = "/data/media/.rom";
-    public String nextbootFile = "/data/media/.nextboot";
+    public final String firstimage = downloadPath + "/first.img";
+    public final String secondimage = downloadPath + "/second.img";
+    public final String onekernelInstalledFile = "/sbin/mount_recovery.sh";
+    public final String onekernelImage = downloadPath + "/boot.img";
+    public final String rebootRecoveryFile = "/data/media/rebootrs";
+    public final String romFile = "/data/media/.rom";
+    public final String nextbootFile = "/data/media/.nextboot";
 
-    public String manualbootFile = romswitcherPath + "/manualboot";
-    public String appsharingFile = romswitcherPath + "/appsharing";
+    public final String manualbootFile = romswitcherPath + "/manualboot";
+    public final String appsharingFile = romswitcherPath + "/appsharing";
 
-    public String versionFile = downloadPath + "/version";
-    public String versionFileOneKernel = "/sbin/version";
+    public final String versionFile = downloadPath + "/version";
+    public final String versionFileOneKernel = "/sbin/version";
 
-    public String configurationFile = romswitcherPath + "/configuration.xml";
-    public String configurationFileLink = "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/devices";
-    public String applink = "http://slideme.org/application/romswitcher";
+    public final String[] assets = new String[]{"kexec", "unpackbootimg"};
+    public final String kexecPath = romswitcherPath + "/kexec";
+    public final String kexecRamdik = downloadPath + "boot.img-ramdisk.gz";
 
-    public String TAG = "RomSwitcher";
+    public final String configurationFile = romswitcherPath + "/configuration.xml";
+    public final String configurationFileLink = "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/devices";
+    public final String applink = "http://slideme.org/application/romswitcher";
 
-    public String deviceName = Build.DEVICE;
-    public String deviceBoard = Build.BOARD;
+    public final String TAG = "RomSwitcher";
+
+    public final String deviceName = Build.DEVICE;
+    public final String deviceBoard = Build.BOARD;
 
 }

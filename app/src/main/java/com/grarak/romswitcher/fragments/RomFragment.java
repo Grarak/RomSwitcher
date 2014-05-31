@@ -20,6 +20,7 @@ package com.grarak.romswitcher.fragments;
  * Created by grarak's kitten (meow) on 31.03.14.
  */
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,11 +29,13 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.activities.FileBrowserActivity;
 import com.grarak.romswitcher.activities.RomInformationActivity;
 import com.grarak.romswitcher.utils.Backup;
 import com.grarak.romswitcher.utils.Constants;
@@ -43,6 +46,7 @@ import com.grarak.romswitcher.utils.RootUtils;
 import com.grarak.romswitcher.utils.Utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +56,8 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private RootUtils root = new RootUtils();
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private final String ARG_FILTER = "filter";
+    private final String ARG_RESULT = "result";
     private int currentFragment = 0;
 
     public static RomFragment newInstance(int sectionNumber) {
@@ -66,6 +72,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private final String KEY_ROM_CATEGORY = "rom_category";
     private final String KEY_REBOOT_ROM = "reboot_rom";
     private final String KEY_ADVANCED_CATEGORY = "advanced_category";
+    private final String KEY_CHOOSE_KERNEL = "choose_kernel";
     private final String KEY_REMOVE_ROM = "remove_rom";
     private final String KEY_BACKUP_ROM = "backup_rom";
     private final String KEY_RESTORE_ROM = "restore_rom";
@@ -82,17 +89,25 @@ public class RomFragment extends PreferenceFragment implements Constants {
         // Set titles of Preferences
         findPreference(KEY_ROM_CATEGORY).setTitle(getString(R.string.rom, currentFragment));
         findPreference(KEY_REBOOT_ROM).setTitle(getString(R.string.reboot_rom, currentFragment));
+        findPreference(KEY_CHOOSE_KERNEL).setTitle(getString(R.string.choose_kernel, currentFragment));
+        findPreference(KEY_CHOOSE_KERNEL).setSummary(getString(R.string.choose_kernel_summary, currentFragment));
         findPreference(KEY_REMOVE_ROM).setTitle(getString(R.string.remove_rom, currentFragment));
         findPreference(KEY_BACKUP_ROM).setTitle(getString(R.string.backup_rom, currentFragment));
         findPreference(KEY_RESTORE_ROM).setTitle(getString(R.string.restore_rom, currentFragment));
         findPreference(KEY_DELETE_BACKUP).setTitle(getString(R.string.delete_backup, currentFragment));
         findPreference(KEY_ROM_INFORMATION).setTitle(getString(R.string.rom_information, currentFragment));
 
-        PreferenceScreen mRomHeader = (PreferenceScreen) findPreference(KEY_ROM_HEADER);
-        PreferenceCategory mAdvancedCategory = (PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY);
-        if (currentFragment == 1) mRomHeader.removePreference(mAdvancedCategory);
-        else if (!utils.existfile("/data/media/." + String.valueOf(currentFragment) + "rom"))
-            root.run("mkdir -p /data/media/." + String.valueOf(currentFragment) + "rom");
+        // Remove advanced settings in first tab
+        if (currentFragment == 1)
+            ((PreferenceScreen) findPreference(KEY_ROM_HEADER)).removePreference((PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY));
+        else {
+            // Create folders of roms
+            if (!utils.existfile("/data/media/." + String.valueOf(currentFragment) + "rom"))
+                root.run("mkdir -p /data/media/." + String.valueOf(currentFragment) + "rom");
+            // Remove choose kernel option if device doesn't use kexec hardboot
+            if (!utils.kexecHardboot())
+                ((PreferenceCategory) findPreference(KEY_ADVANCED_CATEGORY)).removePreference((PreferenceScreen) findPreference(KEY_CHOOSE_KERNEL));
+        }
 
     }
 
@@ -104,6 +119,8 @@ public class RomFragment extends PreferenceFragment implements Constants {
             utils.toast(getString(R.string.install_tools_first), getActivity());
         else if (preference == findPreference(KEY_REBOOT_ROM))
             reboot();
+        else if (preference == findPreference(KEY_CHOOSE_KERNEL))
+            startActivity(FileBrowserActivity.class);
         else if (preference == findPreference(KEY_REMOVE_ROM))
             remove();
         else if (preference == findPreference(KEY_BACKUP_ROM))
@@ -113,7 +130,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
         else if (preference == findPreference(KEY_DELETE_BACKUP))
             showBackupList(false);
         else if (preference == findPreference(KEY_ROM_INFORMATION))
-            showRomInformation();
+            startActivity(RomInformationActivity.class);
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -200,7 +217,6 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
         // Check if backup folder exists
         if (backup.listFiles() != null) {
-            // Check if backup folder contains anything
             if (backup.listFiles().length > 0) {
                 for (File file : backup.listFiles())
                     listItems.add(file.getName().replace(".tar", ""));
@@ -233,13 +249,58 @@ public class RomFragment extends PreferenceFragment implements Constants {
         } else utils.toast(getString(R.string.no_backup_found, currentFragment), getActivity());
     }
 
-    private void showRomInformation() {
-        utils.showProgressDialog(getString(R.string.loading), true);
-        Intent info = new Intent(getActivity(), RomInformationActivity.class);
+    private void startActivity(Class clas) {
+        if (clas == RomInformationActivity.class)
+            utils.showProgressDialog(getString(R.string.loading), true);
+        Intent info = new Intent(getActivity(), clas);
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, currentFragment);
+        if (clas == FileBrowserActivity.class) args.putString(ARG_FILTER, "img");
         info.putExtras(args);
-        startActivity(info);
+        if (clas == FileBrowserActivity.class) startActivityForResult(info, 1);
+        else startActivity(info);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1)
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+
+                    String result = data.getStringExtra(ARG_RESULT);
+                    new File(kexecPath + "/" + currentFragment + "rom").mkdirs();
+
+                    root.run("rm -rf " + kexecPath + "/" + currentFragment + "rom/*");
+                    root.run("cp -f " + result + " " + kexecPath + "/" + currentFragment + "rom/boot.img");
+                    root.run(kexecPath + "/unpackbootimg -i " + kexecPath + "/" + currentFragment + "rom/boot.img -o " + kexecPath + "/" + currentFragment + "rom");
+
+                    // If base flag is not defined to not check for compatibility of selected kernel
+                    String kernelBase = utils.getKernelBase();
+                    if (!kernelBase.equals("0")) {
+
+                        // Sleep to make sure device is done with unpacking
+                        Thread.sleep(1000);
+
+                        // Check if unpack was successful
+                        String bootimgBase = utils.readFile(kexecPath + "/" + currentFragment + "rom/boot.img-base").split("\r?\n")[0];
+                        if (!utils.getKernelBase().replace("0x", "").equals(bootimgBase)) {
+                            root.run("rm -rf " + kexecPath + "/" + currentFragment + "rom/*");
+                            AlertDialog.Builder error = new AlertDialog.Builder(getActivity());
+                            error.setMessage(getString(R.string.choose_kernel_error))
+                                    .setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        }
+                                    }).show();
+                        }
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.e(TAG, "unable to read " + kexecPath + "/" + currentFragment + "rom/boot.img-base");
+                }
+
+            }
+    }
 }

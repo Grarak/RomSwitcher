@@ -29,6 +29,8 @@ public interface Helpers {
 
     // All my helpers, I like it (meow)
 
+    public void copyAssets(String path, String file, Context context);
+
     public long getFolderSize(String folder);
 
     public boolean isSupported();
@@ -45,6 +47,10 @@ public interface Helpers {
 
     public boolean unZip(String path, String name);
 
+    public boolean useDtb();
+
+    public String getKernelBase();
+
     public String getDevNote();
 
     public boolean manualBoot();
@@ -52,6 +58,8 @@ public interface Helpers {
     public boolean installRecovery();
 
     public boolean rebootRecovery();
+
+    public boolean kexecHardboot();
 
     public boolean oneKernel();
 
