@@ -183,7 +183,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                     }
                 } else return "error";
             } else
-                root.writePartition(utils.oneKernel() ? utils.getPartition("boot") : secondimage, utils.getPartition("recovery"));
+                root.writePartition(utils.oneKernel() || utils.kexecHardboot() ? utils.getPartition("boot") : secondimage, utils.getPartition("recovery"));
             return null;
         }
 
