@@ -206,7 +206,7 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public boolean kexecHardboot() {
-        return !getDeviceConfig("kexechardboot").equals("0");
+        return getDeviceConfig("kexechardboot").equals("1");
     }
 
     @Override
