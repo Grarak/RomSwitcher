@@ -49,7 +49,7 @@ public class RebootRom extends AsyncTask<String, Integer, String> implements Con
 
         if (utils.kexecHardboot()) {
             String zImage = kexecPath + "/" + currentFragment + "rom/zImage";
-            String kexeccommand = kexecPath + "/kexec --load-hardboot " + zImage + " --initrd=" + kexecRamdik + " --mem-min=" + utils.kexecHardboot() + " --command-line=\"$(cat /proc/cmdline)\"";
+            String kexeccommand = kexecPath + "/kexec --load-hardboot " + zImage + " --initrd=" + kexecRamdik + " --mem-min=" + utils.getMemmin() + " --command-line=\"$(cat /proc/cmdline)\"";
             if (utils.useDtb()) kexeccommand = kexeccommand + " --dtb";
             root.run(kexeccommand);
         }

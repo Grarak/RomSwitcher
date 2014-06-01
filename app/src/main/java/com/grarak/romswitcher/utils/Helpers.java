@@ -59,6 +59,8 @@ public interface Helpers {
 
     public boolean rebootRecovery();
 
+    public String getMemmin();
+
     public boolean kexecHardboot();
 
     public boolean oneKernel();

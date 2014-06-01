@@ -200,6 +200,11 @@ public class Utils implements Helpers, Constants {
     }
 
     @Override
+    public String getMemmin() {
+        return getDeviceConfig("memmin");
+    }
+
+    @Override
     public boolean kexecHardboot() {
         return !getDeviceConfig("kexechardboot").equals("0");
     }
