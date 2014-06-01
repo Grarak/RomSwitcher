@@ -181,7 +181,7 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public String getDevNote() {
-        return getDeviceConfig("note").replace("\\n", "\n"); // Ugly hack to show next line
+        return getDeviceConfig("devnote").replace("\\n", "\n"); // Ugly hack to show next line
     }
 
     @Override
