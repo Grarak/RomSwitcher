@@ -66,7 +66,8 @@
 
     <!-- Rom -->
     <string name="rom">ROM %d</string>
-    <string name="reboot_rom">Reboot into ROM %d</string>
+    <string name="reboot_rom">Reboot to ROM %d</string>
+    <string name="cannot_reboot">It\'s not possible to boot to ROM %d. Please boot back to default ROM first.</string>
     <string name="advanced_settings">Advanced Settings</string>
     <string name="advanced_settings_summary">Please only use these options if you are running your default ROM!</string>
     <string name="choose_kernel">Choose kernel of ROM %d</string>

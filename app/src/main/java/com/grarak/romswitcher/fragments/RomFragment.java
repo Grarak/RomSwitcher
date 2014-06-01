@@ -137,18 +137,28 @@ public class RomFragment extends PreferenceFragment implements Constants {
 
     private void reboot() {
         AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
-        warning.setMessage(getString(R.string.reboot_now))
-                .setPositiveButton(getString(R.string.yes
-                ), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        new RebootRom(getActivity(), currentFragment).execute();
-                    }
-                }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        }).show();
+        if (utils.kexecHardboot() && !utils.isDefaultRom()) {
+            warning.setMessage(getString(R.string.cannot_reboot))
+                    .setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+        } else {
+            warning.setMessage(getString(R.string.reboot_now))
+                    .setPositiveButton(getString(R.string.yes
+                    ), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            new RebootRom(getActivity(), currentFragment).execute();
+                        }
+                    }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+        }
+        warning.show();
     }
 
     private void remove() {
