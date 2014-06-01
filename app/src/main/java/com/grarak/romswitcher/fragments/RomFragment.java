@@ -138,7 +138,7 @@ public class RomFragment extends PreferenceFragment implements Constants {
     private void reboot() {
         AlertDialog.Builder warning = new AlertDialog.Builder(getActivity());
         if (utils.kexecHardboot() && !utils.isDefaultRom()) {
-            warning.setMessage(getString(R.string.cannot_reboot))
+            warning.setMessage(getString(R.string.cannot_reboot, currentFragment))
                     .setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
