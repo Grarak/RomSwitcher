@@ -224,42 +224,48 @@ public class Utils implements Helpers, Constants {
 
         String output = "0";
 
-        File[] rootfiles = new File("/").listFiles();
-        String fstab = "";
-        if (rootfiles != null) {
-            for (File file : rootfiles)
-                if (file.getName().contains("fstab") && !file.getName().equals("fstab.goldfish"))
-                    fstab = file.getName();
-            try {
-                if (fstab != null) {
-                    root.run("mount -o rw,remount /");
-                    root.run("chmod 777 /" + fstab);
+        if (partition.equals("boot")) output = getDeviceConfig("bootpartition");
+        else if (partition.equals("recovery"))
+            output = getDeviceConfig("recoverypartition");
 
-                    String[] fstabvalues = readFile("/" + fstab).split("\\r?\\n");
+        if (output.equals("0")) {
+            File[] rootfiles = new File("/").listFiles();
+            String fstab = "";
+            if (rootfiles != null) {
+                for (File file : rootfiles)
+                    if (file.getName().contains("fstab") && !file.getName().equals("fstab.goldfish"))
+                        fstab = file.getName();
+                try {
+                    if (fstab != null) {
+                        root.run("mount -o rw,remount /");
+                        root.run("chmod 777 /" + fstab);
 
-                    String par = "";
+                        String[] fstabvalues = readFile("/" + fstab).split("\\r?\\n");
 
-                    for (String partitionline : fstabvalues)
-                        if (partitionline.contains(partition))
-                            par = partitionline.split(" ")[0];
+                        String par = "";
 
-                    if (!par.isEmpty()) output = par;
-                    else {
-                        if (existfile("/file_contexts")) {
-                            String[] filecontextvalues = readFile("file_contexts").split("\\r?\\n");
+                        for (String partitionline : fstabvalues)
+                            if (partitionline.contains(partition))
+                                par = partitionline.split(" ")[0];
 
-                            for (String partitionline : filecontextvalues)
-                                if (partitionline.contains(partition + "blk"))
-                                    output = partitionline.split(" ")[0];
+                        if (!par.isEmpty()) output = par;
+                        else {
+                            if (existfile("/file_contexts")) {
+                                String[] filecontextvalues = readFile("file_contexts").split("\\r?\\n");
+
+                                for (String partitionline : filecontextvalues)
+                                    if (partitionline.contains(partition + "blk"))
+                                        output = partitionline.split(" ")[0];
+                            }
                         }
                     }
-                    root.run("mount -o ro,remount /");
+                } catch (IOException e) {
+                    Log.e(TAG, "unable to read fstab file: " + fstab);
+                    return getPartition(partition);
                 }
-            } catch (IOException e) {
-                Log.e(TAG, "unable to read fstab file: " + fstab);
-                root.run("mount -o ro,remount /");
-                return getPartition(partition);
             }
+
+            root.run("mount -o ro,remount /");
         }
 
         return output.equals("0") ? getPartition(partition) : output;
