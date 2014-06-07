@@ -118,7 +118,7 @@ public class InstallationFragment extends PreferenceFragment implements Constant
             else {
                 if (preference == findPreference(KEY_INSTALL_TOOLS))
                     if (utils.existfile(toolfile)) {
-                        if (utils.oneKernel())
+                        if (utils.oneKernel() || utils.kexecHardboot())
                             checkPartition("boot", "tools");
                         else
                             installTools();
