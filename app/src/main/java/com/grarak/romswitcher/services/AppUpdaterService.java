@@ -66,7 +66,7 @@ public class AppUpdaterService extends Service implements Constants {
                     // Pull the version code of html return
                     String lastversion = output.split("RomSwitcher <span class=\"version\">v")[1].split("</span>")[0];
                     String currentversion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-                    if (!lastversion.equals(currentversion)) showNotification();
+                    if (!lastversion.equals(currentversion)) showNotification(lastversion);
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 Log.e(TAG, "unable to read app version");
@@ -76,15 +76,15 @@ public class AppUpdaterService extends Service implements Constants {
         }
     }
 
-    private void showNotification() {
+    private void showNotification(String version) {
         NotificationManager notifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int count = 0;
 
         PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(Intent.ACTION_VIEW, Uri.parse(applink)), 0);
 
-        Notification notifyObj = new Notification(R.drawable.ic_launcher, getString(R.string.newappversion), System.currentTimeMillis());
-        notifyObj.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), getString(R.string.newappversion), intent);
+        Notification notifyObj = new Notification(R.drawable.ic_launcher, getString(R.string.new_app_version, version), System.currentTimeMillis());
+        notifyObj.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), getString(R.string.new_app_version, version), intent);
         notifyObj.number = ++count;
         notifyObj.flags |= Notification.FLAG_AUTO_CANCEL;
         notifyMgr.notify(2, notifyObj);
