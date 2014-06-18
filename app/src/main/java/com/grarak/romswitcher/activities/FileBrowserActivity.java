@@ -182,7 +182,6 @@ public class FileBrowserActivity extends Activity implements Constants {
         if (list.size() == 0)
             new Utils().toast(getString(R.string.directory_empty), getApplicationContext());
 
-        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), R.layout.simple_list_item_1, list);
         filesList.setAdapter(new CustomArrayAdapter(getApplicationContext(), list));
 
     }

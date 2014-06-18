@@ -53,7 +53,7 @@
     <string name="install_tools_summary">Install the required files. Do this always after you downloaded the tools.</string>
     <string name="recovery">Recovery</string>
     <string name="reboot_into_recovery">Reboot into RomSwitcher recovery</string>
-    <string name="reboot_into_recovery_summary">Reboot into RomSwitcher recovery, without overwritting the current recovery partition.</string>
+    <string name="reboot_into_recovery_summary">Reboot into RomSwitcher recovery, without overwriting the current recovery partition.</string>
     <string name="install_recovery">Install RomSwitcher recovery</string>
     <string name="install_recovery_summary">Install RomSwitcher recovery as default recovery.</string>
     <string name="download_tools_first">Please download the tools first.</string>
@@ -99,5 +99,13 @@
     <string name="show_all">Show all files</string>
     <string name="directory_empty">Directory empty</string>
     <string name="make_sure">Are you sure you want to select %s?</string>
+
+    <!-- Appsharing -->
+    <string name="sharing">Sharing</string>
+    <string name="between">between</string>
+    <string name="add">Add</string>
+    <string name="no_sharings">No sharings defined</string>
+    <string name="sharing_between">Sharing between ROM %1$s and ROM %2$s</string>
+    <string name="edit">Edit</string>
 
 </resources>

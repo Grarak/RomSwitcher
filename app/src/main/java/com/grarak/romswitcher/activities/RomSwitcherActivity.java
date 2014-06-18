@@ -122,7 +122,7 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        progressItem = menu.findItem(R.id.menu_progress);
+        progressItem = menu.findItem(R.id.action_menu_progress);
         return true;
     }
 

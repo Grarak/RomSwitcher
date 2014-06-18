@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.util.Log;
 
 import com.grarak.romswitcher.R;
@@ -77,6 +78,13 @@ public class AppUpdaterService extends Service implements Constants {
     }
 
     private void showNotification(String version) {
+        try {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(50);
+            Thread.sleep(50);
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(50);
+        } catch (InterruptedException e) {
+        }
+
         NotificationManager notifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int count = 0;
 

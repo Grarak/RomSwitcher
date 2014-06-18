@@ -136,7 +136,9 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public boolean isRSInstalled() {
-        return existfile(onekernelInstalledFile) || (existfile(firstimage) && existfile(secondimage));
+        if (oneKernel()) return existfile(onekernelInstalledFile);
+        else if (kexecHardboot()) return existfile(onekernelImage);
+        else return existfile(firstimage) && existfile(secondimage);
     }
 
     @Override
@@ -206,7 +208,7 @@ public class Utils implements Helpers, Constants {
 
     @Override
     public boolean kexecHardboot() {
-        return getDeviceConfig("kexechardboot").equals("1");
+        return getDeviceConfig("kexechardboot").equals("1") && !getMemmin().equals("0");
     }
 
     @Override

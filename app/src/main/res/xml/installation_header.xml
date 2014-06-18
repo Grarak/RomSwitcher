@@ -42,7 +42,7 @@
             android:key="manualboot"
             android:title="@string/manualboot" />
 
-        <SwitchPreference
+        <PreferenceScreen
             android:key="appsharing"
             android:title="@string/appsharing" />
 

@@ -23,6 +23,7 @@ package com.grarak.romswitcher.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -33,6 +34,7 @@ import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 
 import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.activities.AppsharingActivity;
 import com.grarak.romswitcher.activities.RomSwitcherActivity;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.RootUtils;
@@ -102,10 +104,6 @@ public class InstallationFragment extends PreferenceFragment implements Constant
         mManualboot.setChecked(utils.existfile(manualbootFile));
         mManualboot.setOnPreferenceChangeListener(this);
 
-        mAppsharing = (SwitchPreference) findPreference(KEY_APPSHARING);
-        mAppsharing.setChecked(utils.existfile(appsharingFile));
-        mAppsharing.setOnPreferenceChangeListener(this);
-
         if (!utils.manualBoot()) mSettingsCategory.removePreference(mManualboot);
 
     }
@@ -130,6 +128,8 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                     checkReboot(true);
                 else if (preference == findPreference(KEY_INSTALL_RECOVERY))
                     checkPartition("recovery", "recovery");
+                else if (preference == findPreference(KEY_APPSHARING))
+                    startActivity(new Intent(getActivity(), AppsharingActivity.class));
             }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -142,12 +142,6 @@ public class InstallationFragment extends PreferenceFragment implements Constant
                 utils.writeFile(manualbootFile, "1");
             else
                 utils.deleteFile(manualbootFile);
-            return true;
-        } else if (preference == mAppsharing) {
-            if (!mAppsharing.isChecked())
-                utils.writeFile(appsharingFile, "1");
-            else
-                utils.deleteFile(appsharingFile);
             return true;
         }
         return false;
