@@ -226,6 +226,7 @@ public class Utils implements Helpers, Constants {
 
         String output = "0";
 
+        // Check if xml contains partitions
         if (partition.equals("boot")) output = getDeviceConfig("bootpartition");
         else if (partition.equals("recovery"))
             output = getDeviceConfig("recoverypartition");
