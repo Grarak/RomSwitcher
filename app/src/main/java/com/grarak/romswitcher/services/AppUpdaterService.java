@@ -33,6 +33,7 @@ import android.os.Vibrator;
 import android.util.Log;
 
 import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.utils.Connection;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.Utils;
 
@@ -47,27 +48,31 @@ public class AppUpdaterService extends Service implements Constants {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         new Utils().getConnection(applink);
-        new Connection().execute();
+        new Connect().execute();
 
         return Service.START_NOT_STICKY;
     }
 
-    private class Connection extends AsyncTask<String, Void, String> {
+    private class Connect extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            return com.grarak.romswitcher.utils.Connection.htmlstring;
+            return Connection.htmlstring;
         }
 
         @Override
         protected void onPostExecute(String result) {
             try {
-                String output = com.grarak.romswitcher.utils.Connection.htmlstring;
+                String output = Connection.htmlstring;
                 if (!output.isEmpty()) {
                     // Pull the version code of html return
-                    String lastversion = output.split("RomSwitcher <span class=\"version\">v")[1].split("</span>")[0];
-                    String currentversion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-                    if (!lastversion.equals(currentversion)) showNotification(lastversion);
+                    String[] outputarray = output.split("RomSwitcher <span class=\"version\">v");
+                    // Check if the website is correct
+                    if (outputarray.length == 2) {
+                        String lastversion = outputarray[1].split("</span>")[0];
+                        String currentversion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                        if (!lastversion.equals(currentversion)) showNotification(lastversion);
+                    }
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 Log.e(TAG, "unable to read app version");
