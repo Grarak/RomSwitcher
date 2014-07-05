@@ -24,6 +24,8 @@ import android.os.Build;
 
 public interface Constants {
 
+    public final boolean nonroot = true;
+
     public final String externalStorage = "/sdcard";
     public final String romswitcherPath = externalStorage + "/romswitcher";
     public final String downloadPath = romswitcherPath + "/downloads";

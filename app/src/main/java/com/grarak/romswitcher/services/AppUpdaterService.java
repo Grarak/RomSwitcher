@@ -68,7 +68,7 @@ public class AppUpdaterService extends Service implements Constants {
                     // Pull the version code of html return
                     String[] outputarray = output.split("RomSwitcher <span class=\"version\">v");
                     // Check if the website is correct
-                    if (outputarray.length == 2) {
+                    if (outputarray.length >= 2) {
                         String lastversion = outputarray[1].split("</span>")[0];
                         String currentversion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
                         if (!lastversion.equals(currentversion)) showNotification(lastversion);

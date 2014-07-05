@@ -62,7 +62,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
             Log.e(TAG, "unable to read app version");
         }
 
-        findPreference(KEY_CURRENT_VERSION).setSummary(getCurrentVersion());
+        findPreference(KEY_CURRENT_VERSION).setSummary(utils.getCurrentVersion().isEmpty() ? getString(R.string.unknown) : utils.getCurrentVersion());
         findPreference(KEY_LAST_VERSION).setSummary(getLastVersion());
 
         // Copy Assets files if using kexec hardboot
@@ -127,7 +127,7 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
 
                     /*
                      * Restart application after downloading the configuration file,
-                     * thus the other fragments will appear without to add them again.
+                     * makes a lot easier for me to add other fragments.
                      */
                     utils.reset(getActivity());
                 }
@@ -135,12 +135,8 @@ public class DownloadFragment extends PreferenceFragment implements Constants {
         }
     }
 
-    private String getCurrentVersion() {
-        return utils.getCurrentVersion().isEmpty() ? getString(R.string.unknown) : utils.getCurrentVersion();
-    }
-
     private String getLastVersion() {
-        return utils.getLastVersion().isEmpty() ? getString(R.string.unknown) : utils.getLastVersion();
+        return utils.getLastVersion().isEmpty() || utils.getLastVersion().equals("0") ? getString(R.string.unknown) : utils.getLastVersion();
     }
 
     private String getDownloadLink() {

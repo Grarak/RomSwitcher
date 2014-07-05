@@ -46,6 +46,17 @@
     <string name="download_tools_summary">Download the installation files.</string>
     <string name="download_configuration_first">Please download the configuration file first.</string>
 
+    <!-- Credits -->
+    <string name="credits">Credits</string>
+    <string name="founder">Founder</string>
+    <string name="grarak">Grarak</string>
+    <string name="devs">Developers</string>
+    <string name="devslist">Grarak\nMithun46\nMaDc0w\nbluefa1con\nDisturbed™\n</string>
+    <string name="special_thanks">Special thanks</string>
+    <string name="special_thanks_list">Stericson (RootTools)\nGokhanmoral (ramdisk scripts)\nDerTeufel1980 (recovery scripts)\nChenglu (touch recovery source)\nCyanogenMod (CWM)\n</string>
+    <string name="source">Source</string>
+    <string name="github"><u>https://github.com/Grarak/RomSwitcher\n</u></string>
+
     <!-- Installation -->
     <string name="installation">Installation</string>
     <string name="dev_notes">Note from Developer</string>

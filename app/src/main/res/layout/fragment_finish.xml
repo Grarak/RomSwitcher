@@ -53,5 +53,6 @@
             android:textStyle="italic|bold"
             android:textColor="@android:color/white"
             android:layout_gravity="center_horizontal" />
+
     </LinearLayout>
 </RelativeLayout>

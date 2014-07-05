@@ -33,6 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.grarak.romswitcher.R;
+import com.grarak.romswitcher.fragments.CreditsFragment;
 import com.grarak.romswitcher.fragments.DownloadFragment;
 import com.grarak.romswitcher.fragments.InstallationFragment;
 import com.grarak.romswitcher.fragments.RomFragment;
@@ -67,8 +68,11 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
         fragments.clear();
         fragmentsname.clear();
 
-        // Check if root or busybox is available
-        if (!RootTools.isAccessGiven() || !RootTools.isBusyboxAvailable()) {
+        /*
+         * Check if root or busybox is available
+         * Disable check if nonroot is set to true
+         */
+        if ((!RootTools.isAccessGiven() || !RootTools.isBusyboxAvailable()) && !nonroot) {
             new Utils().toast(getString(!RootTools.isAccessGiven() ? R.string.noroot : R.string.nobusybox), getApplicationContext());
             exit();
         }
@@ -82,12 +86,15 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
         if (new Utils().isSupported()) {
             fragments.add(new InstallationFragment());
             fragmentsname.add(getString(R.string.installation));
+
+            for (int i = 1; i <= new Utils().getRomNumber(); i++) {
+                fragments.add(RomFragment.newInstance(i));
+                fragmentsname.add(getString(R.string.rom, i));
+            }
         }
 
-        for (int i = 1; i <= new Utils().getRomNumber(); i++) {
-            fragments.add(RomFragment.newInstance(i));
-            fragmentsname.add(getString(R.string.rom, i));
-        }
+        fragments.add(new CreditsFragment());
+        fragmentsname.add(getString(R.string.credits));
 
         final ActionBar actionBar = getActionBar();
         if (actionBar != null)
@@ -105,6 +112,7 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
             }
         });
 
+        // Load all fragments once
         mViewPager.setOffscreenPageLimit(fragments.size());
 
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++)
