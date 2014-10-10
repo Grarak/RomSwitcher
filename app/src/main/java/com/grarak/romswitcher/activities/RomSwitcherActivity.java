@@ -25,7 +25,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -37,7 +36,6 @@ import com.grarak.romswitcher.fragments.CreditsFragment;
 import com.grarak.romswitcher.fragments.DownloadFragment;
 import com.grarak.romswitcher.fragments.InstallationFragment;
 import com.grarak.romswitcher.fragments.RomFragment;
-import com.grarak.romswitcher.services.AppUpdaterService;
 import com.grarak.romswitcher.utils.Constants;
 import com.grarak.romswitcher.utils.Utils;
 import com.stericson.RootTools.RootTools;
@@ -60,9 +58,7 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
 
         /*
          * Batman is coming nananananana
-         * Let's check for new application version
          */
-        startService(new Intent(getApplicationContext(), AppUpdaterService.class));
 
         // Clear fragments otherwise fragments will be spammed with items after recreation
         fragments.clear();
@@ -72,7 +68,7 @@ public class RomSwitcherActivity extends Activity implements ActionBar.TabListen
          * Check if root or busybox is available
          * Disable check if nonroot is set to true
          */
-        if ((!RootTools.isAccessGiven() || !RootTools.isBusyboxAvailable()) && !nonroot) {
+        if ((!RootTools.isAccessGiven() || !RootTools.isBusyboxAvailable())) {
             new Utils().toast(getString(!RootTools.isAccessGiven() ? R.string.noroot : R.string.nobusybox), getApplicationContext());
             exit();
         }

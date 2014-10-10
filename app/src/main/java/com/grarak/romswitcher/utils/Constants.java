@@ -24,8 +24,6 @@ import android.os.Build;
 
 public interface Constants {
 
-    public final boolean nonroot = false;
-
     public final String externalStorage = "/sdcard";
     public final String romswitcherPath = externalStorage + "/romswitcher";
     public final String downloadPath = romswitcherPath + "/downloads";
@@ -52,7 +50,6 @@ public interface Constants {
 
     public final String configurationFile = romswitcherPath + "/configuration.xml";
     public final String configurationFileLink = "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/devices";
-    public final String applink = "http://slideme.org/application/romswitcher";
 
     public final String TAG = "RomSwitcher";
 

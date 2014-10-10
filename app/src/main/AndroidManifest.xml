@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -38,8 +37,6 @@
         <activity
             android:name="com.grarak.romswitcher.activities.AppsharingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <service android:name=".services.AppUpdaterService" />
     </application>
 
 </manifest>
