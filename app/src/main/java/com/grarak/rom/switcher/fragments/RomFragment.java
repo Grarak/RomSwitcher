@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.fragments;
+package com.grarak.rom.switcher.fragments;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -34,16 +34,16 @@ import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.activities.FileBrowserActivity;
-import com.grarak.romswitcher.activities.RomInformationActivity;
-import com.grarak.romswitcher.utils.Backup;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.Delete;
-import com.grarak.romswitcher.utils.RebootRom;
-import com.grarak.romswitcher.utils.Restore;
-import com.grarak.romswitcher.utils.RootUtils;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.activities.FileBrowserActivity;
+import com.grarak.rom.switcher.activities.RomInformationActivity;
+import com.grarak.rom.switcher.utils.Backup;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.Delete;
+import com.grarak.rom.switcher.utils.RebootRom;
+import com.grarak.rom.switcher.utils.Restore;
+import com.grarak.rom.switcher.utils.RootUtils;
+import com.grarak.rom.switcher.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;

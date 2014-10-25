@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.utils;
+package com.grarak.rom.switcher.utils;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -24,7 +24,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 
-import com.grarak.romswitcher.R;
+import com.grarak.rom.switcher.R;
 
 public class Delete extends AsyncTask<String, Integer, Void> {
 

@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.fragments;
+package com.grarak.rom.switcher.fragments;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -28,12 +28,12 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.activities.RomSwitcherActivity;
-import com.grarak.romswitcher.utils.Connection;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.Download;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.activities.RomSwitcherActivity;
+import com.grarak.rom.switcher.utils.Connection;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.Download;
+import com.grarak.rom.switcher.utils.Utils;
 
 import java.io.File;
 

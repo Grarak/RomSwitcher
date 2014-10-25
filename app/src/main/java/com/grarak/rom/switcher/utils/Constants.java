@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.utils;
+package com.grarak.rom.switcher.utils;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project

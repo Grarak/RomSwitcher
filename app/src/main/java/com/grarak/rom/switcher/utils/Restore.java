@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.utils;
+package com.grarak.rom.switcher.utils;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -24,11 +24,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
 
-import com.grarak.romswitcher.R;
+import com.grarak.rom.switcher.R;
 
 import java.io.File;
 
-import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+import static com.grarak.rom.switcher.utils.Utils.ProgressDialog;
 
 public class Restore extends AsyncTask<String, Integer, String> implements Constants {
 
@@ -82,7 +82,7 @@ public class Restore extends AsyncTask<String, Integer, String> implements Const
         utils.showProgressDialog(context.getString(R.string.restoring), true);
 
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, context.getClass().getName());
         mWakeLock.acquire();
     }
 

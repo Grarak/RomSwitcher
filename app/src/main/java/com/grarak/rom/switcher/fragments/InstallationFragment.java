@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.fragments;
+package com.grarak.rom.switcher.fragments;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -33,14 +33,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.activities.AppsharingActivity;
-import com.grarak.romswitcher.activities.RomSwitcherActivity;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.RootUtils;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.activities.AppsharingActivity;
+import com.grarak.rom.switcher.activities.RomSwitcherActivity;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.RootUtils;
+import com.grarak.rom.switcher.utils.Utils;
 
-import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+import static com.grarak.rom.switcher.utils.Utils.ProgressDialog;
 
 public class InstallationFragment extends PreferenceFragment implements Constants, Preference.OnPreferenceChangeListener {
 

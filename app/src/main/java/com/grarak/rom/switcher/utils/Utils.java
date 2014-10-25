@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.utils;
+package com.grarak.rom.switcher.utils;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -40,13 +40,12 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Utils implements Helpers, Constants {
+public class Utils implements Constants {
 
     private String prefname = "settings";
     RootUtils root = new RootUtils();
     public static ProgressDialog ProgressDialog;
 
-    @Override
     public void copyAssets(String path, String file, Context context) {
         AssetManager assetManager = context.getAssets();
         InputStream in;
@@ -68,7 +67,6 @@ public class Utils implements Helpers, Constants {
         }
     }
 
-    @Override
     public long getFolderSize(String folder) {
 
         /*
@@ -84,7 +82,6 @@ public class Utils implements Helpers, Constants {
         return size;
     }
 
-    @Override
     public boolean isSupported() {
         if (existfile(configurationFile))
             try {
@@ -99,14 +96,12 @@ public class Utils implements Helpers, Constants {
         return false;
     }
 
-    @Override
     public void createProgressDialog(Context context) {
         ProgressDialog = new ProgressDialog(context);
         ProgressDialog.setIndeterminate(true);
         ProgressDialog.setProgressStyle(android.app.ProgressDialog.STYLE_HORIZONTAL);
     }
 
-    @Override
     public void showProgressDialog(String message, boolean show) {
         if (ProgressDialog != null) {
             ProgressDialog.setMessage(message);
@@ -117,12 +112,10 @@ public class Utils implements Helpers, Constants {
         }
     }
 
-    @Override
     public boolean isDefaultRom() {
         return !existfile("/.firstrom");
     }
 
-    @Override
     public void reset(Activity activity) {
         if (activity != null) {
             final int enter_anim = android.R.anim.fade_in;
@@ -134,14 +127,12 @@ public class Utils implements Helpers, Constants {
         }
     }
 
-    @Override
     public boolean isRSInstalled() {
         if (oneKernel()) return existfile(onekernelInstalledFile);
         else if (kexecHardboot()) return existfile(onekernelImage);
         else return existfile(firstimage) && existfile(secondimage);
     }
 
-    @Override
     public boolean unZip(String path, String name) {
         try {
             String filename;
@@ -171,52 +162,42 @@ public class Utils implements Helpers, Constants {
         return false;
     }
 
-    @Override
     public boolean useDtb() {
         return getDeviceConfig("dtb").equals("1");
     }
 
-    @Override
     public String getKernelBase() {
         return getDeviceConfig("kernelbase").replace("\\n", "\n");
     }
 
-    @Override
     public String getDevNote() {
         return getDeviceConfig("devnote").replace("\\n", "\n"); // Ugly hack to show next line
     }
 
-    @Override
     public boolean manualBoot() {
         return getDeviceConfig("manualboot").equals("1");
     }
 
-    @Override
     public boolean installRecovery() {
         return getDeviceConfig("installrecovery").equals("1");
     }
 
-    @Override
     public boolean rebootRecovery() {
         return getDeviceConfig("rebootrecovery").equals("1");
     }
 
-    @Override
     public String getMemmin() {
         return getDeviceConfig("memmin");
     }
 
-    @Override
     public boolean kexecHardboot() {
         return getDeviceConfig("kexechardboot").equals("1") && !getMemmin().equals("0");
     }
 
-    @Override
     public boolean oneKernel() {
         return getDeviceConfig("onekernel").equals("1");
     }
 
-    @Override
     public String getPartition(String partition) {
 
         /*
@@ -239,27 +220,25 @@ public class Utils implements Helpers, Constants {
                     if (file.getName().contains("fstab") && !file.getName().equals("fstab.goldfish"))
                         fstab = file.getName();
                 try {
-                    if (fstab != null) {
-                        root.run("mount -o rw,remount /");
-                        root.run("chmod 777 /" + fstab);
+                    root.run("mount -o rw,remount /");
+                    root.run("chmod 777 /" + fstab);
 
-                        String[] fstabvalues = readFile("/" + fstab).split("\\r?\\n");
+                    String[] fstabvalues = readFile("/" + fstab).split("\\r?\\n");
 
-                        String par = "";
+                    String par = "";
 
-                        for (String partitionline : fstabvalues)
-                            if (partitionline.contains(partition))
-                                par = partitionline.split(" ")[0];
+                    for (String partitionline : fstabvalues)
+                        if (partitionline.contains(partition))
+                            par = partitionline.split(" ")[0];
 
-                        if (!par.isEmpty()) output = par;
-                        else {
-                            if (existfile("/file_contexts")) {
-                                String[] filecontextvalues = readFile("file_contexts").split("\\r?\\n");
+                    if (!par.isEmpty()) output = par;
+                    else {
+                        if (existfile("/file_contexts")) {
+                            String[] filecontextvalues = readFile("file_contexts").split("\\r?\\n");
 
-                                for (String partitionline : filecontextvalues)
-                                    if (partitionline.contains(partition + "blk"))
-                                        output = partitionline.split(" ")[0];
-                            }
+                            for (String partitionline : filecontextvalues)
+                                if (partitionline.contains(partition + "blk"))
+                                    output = partitionline.split(" ")[0];
                         }
                     }
                 } catch (IOException e) {
@@ -274,12 +253,10 @@ public class Utils implements Helpers, Constants {
         return output.equals("0") ? getPartition(partition) : output;
     }
 
-    @Override
     public int getRomNumber() {
         return Integer.parseInt(getDeviceConfig("roms"));
     }
 
-    @Override
     public String getCurrentVersion() {
         if (existfile(oneKernel() ? versionFileOneKernel : versionFile))
             try {
@@ -294,12 +271,10 @@ public class Utils implements Helpers, Constants {
         return "";
     }
 
-    @Override
     public String getLastVersion() {
         return getDeviceConfig("version");
     }
 
-    @Override
     public String getDownloadLink() {
         if (existfile(configurationFile))
             return getDeviceConfig("download");
@@ -331,7 +306,6 @@ public class Utils implements Helpers, Constants {
         return supported;
     }
 
-    @Override
     public String readFile(String filepath) throws IOException {
         BufferedReader buffreader = new BufferedReader(new FileReader(filepath), 256);
         String line;
@@ -344,12 +318,10 @@ public class Utils implements Helpers, Constants {
         return text.toString();
     }
 
-    @Override
     public void deleteFile(String file) {
         new File(file).delete();
     }
 
-    @Override
     public void writeFile(String file, String value) {
         if (!value.isEmpty()) {
             FileOutputStream fos;
@@ -372,38 +344,27 @@ public class Utils implements Helpers, Constants {
         }
     }
 
-    @Override
     public void toast(String message, Context context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
     public boolean existfile(String file) {
         return new File(file).exists();
     }
 
-    @Override
     public void getConnection(String url) {
         Connection.htmlstring = "";
         new Connection().execute(url);
     }
 
-    @Override
     public String getString(String name, String defaults, Context context) {
         return context.getSharedPreferences(prefname, 0).getString(name, defaults);
     }
 
-    @Override
-    public void saveString(String name, String value, Context context) {
-        context.getSharedPreferences(prefname, 0).edit().putString(name, value).commit();
-    }
-
-    @Override
     public boolean getBoolean(String name, boolean defaults, Context context) {
         return context.getSharedPreferences(prefname, 0).getBoolean(name, defaults);
     }
 
-    @Override
     public void saveBoolean(String name, boolean value, Context context) {
         context.getSharedPreferences(prefname, 0).edit().putBoolean(name, value).commit();
     }

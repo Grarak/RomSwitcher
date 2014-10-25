@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.utils;
+package com.grarak.rom.switcher.utils;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -25,7 +25,7 @@ import android.os.AsyncTask;
 import android.os.PowerManager;
 import android.util.Log;
 
-import com.grarak.romswitcher.R;
+import com.grarak.rom.switcher.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +35,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.grarak.romswitcher.utils.Utils.ProgressDialog;
+import static com.grarak.rom.switcher.utils.Utils.ProgressDialog;
 
 public class Download extends AsyncTask<String, Integer, String> implements Constants {
 

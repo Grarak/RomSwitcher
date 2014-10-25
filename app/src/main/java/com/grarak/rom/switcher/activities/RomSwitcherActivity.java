@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.activities;
+package com.grarak.rom.switcher.activities;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -31,13 +31,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.fragments.CreditsFragment;
-import com.grarak.romswitcher.fragments.DownloadFragment;
-import com.grarak.romswitcher.fragments.InstallationFragment;
-import com.grarak.romswitcher.fragments.RomFragment;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.fragments.CreditsFragment;
+import com.grarak.rom.switcher.fragments.DownloadFragment;
+import com.grarak.rom.switcher.fragments.InstallationFragment;
+import com.grarak.rom.switcher.fragments.RomFragment;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.Utils;
 import com.stericson.RootTools.RootTools;
 
 import java.util.ArrayList;

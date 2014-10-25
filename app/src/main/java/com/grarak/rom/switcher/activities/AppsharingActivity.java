@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.activities;
+package com.grarak.rom.switcher.activities;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -41,9 +41,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;

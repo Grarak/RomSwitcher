@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.fragments;
+package com.grarak.rom.switcher.fragments;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -29,7 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.grarak.romswitcher.R;
+import com.grarak.rom.switcher.R;
 
 public class CreditsFragment extends Fragment {
 

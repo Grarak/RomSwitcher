@@ -1,4 +1,4 @@
-package com.grarak.romswitcher.activities;
+package com.grarak.rom.switcher.activities;
 
 /*
  * Copyright (C) 2014 The RomSwitcher Project
@@ -31,10 +31,10 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.grarak.romswitcher.R;
-import com.grarak.romswitcher.utils.Constants;
-import com.grarak.romswitcher.utils.RootUtils;
-import com.grarak.romswitcher.utils.Utils;
+import com.grarak.rom.switcher.R;
+import com.grarak.rom.switcher.utils.Constants;
+import com.grarak.rom.switcher.utils.RootUtils;
+import com.grarak.rom.switcher.utils.Utils;
 import com.stericson.RootTools.RootTools;
 import com.stericson.RootTools.exceptions.RootDeniedException;
 import com.stericson.RootTools.execution.Command;
