@@ -37,7 +37,7 @@ public class Utils implements Constants {
     }
 
     public static void setROM(String path, String name) {
-        String value = null;
+        String value;
         if (path == null) path = "";
         if (name.equals("default") || path.startsWith("/data/media")) {
             value = name;
