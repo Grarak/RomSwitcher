@@ -1,0 +1,19 @@
+{
+
+    "devices": [
+
+        {
+
+            "names": [ "i9500", "GT-I9500", "ja3g", "ja3gxx" ],
+            "rebootrecovery": true,
+            "installrecovery": true,
+            "boot": "/dev/block/mmcblk0p9",
+            "recovery": "/dev/block/mmcblk0p10",
+            "externalstorages": [ "/storage/extSdCard", "/storage/sdcard1" ],
+            "config": "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/i9500.json"
+
+        },
+
+    ]
+
+}

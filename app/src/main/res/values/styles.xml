@@ -1,11 +1,23 @@
 <resources>
 
-    <style name="ButtonTheme" parent="@android:style/Widget.ActionButton">
-        <item name="android:layout_height">16dp</item>
-        <item name="android:textSize">30sp</item>
-        <item name="android:textStyle">italic|bold</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+    <style name="AppThemeActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_primary</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+    </style>
+
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
 </resources>
