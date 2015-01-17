@@ -26,7 +26,7 @@ import com.grarak.rom.switcher.elements.ListAdapter;
 import com.grarak.rom.switcher.elements.ScrimInsetsFrameLayout;
 import com.grarak.rom.switcher.fragments.InformationFragment;
 import com.grarak.rom.switcher.fragments.InstallationFragment;
-import com.grarak.rom.switcher.fragments.RomFragment;
+import com.grarak.rom.switcher.fragments.ROMFragment;
 import com.grarak.rom.switcher.fragments.RecoveryFragment;
 import com.grarak.rom.switcher.utils.Constants;
 import com.grarak.rom.switcher.utils.Utils;
@@ -96,10 +96,10 @@ public class MainActivity extends ActionBarActivity implements Constants {
                 mList.add(new ListAdapter.Item(getString(R.string.recovery), new RecoveryFragment()));
                 mList.add(new ListAdapter.Header(getString(R.string.roms)));
                 mList.add(new ListAdapter.Item(getString(R.string.internal_storage),
-                        RomFragment.newInstance(RomFragment.STORAGE.INTERNAL)));
+                        ROMFragment.newInstance(ROMFragment.STORAGE.INTERNAL)));
                 if (Utils.getDevicesJson(this).hasExternalStorage())
                     mList.add(new ListAdapter.Item(getString(R.string.external_storage),
-                            RomFragment.newInstance(RomFragment.STORAGE.EXTERNAL)));
+                            ROMFragment.newInstance(ROMFragment.STORAGE.EXTERNAL)));
             }
         }
     }

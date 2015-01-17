@@ -15,7 +15,7 @@ import com.grarak.rom.switcher.utils.root.RootUtils;
 /**
  * Created by willi on 17.01.15.
  */
-public class RomFragment extends RecyclerViewFragment {
+public class ROMFragment extends RecyclerViewFragment {
 
     public enum STORAGE {
         INTERNAL, EXTERNAL
@@ -26,8 +26,8 @@ public class RomFragment extends RecyclerViewFragment {
     private String PATH;
     private MenuItem rebootDefault;
 
-    public static RomFragment newInstance(STORAGE storage) {
-        RomFragment romFragment = new RomFragment();
+    public static ROMFragment newInstance(STORAGE storage) {
+        ROMFragment romFragment = new ROMFragment();
         Bundle args = new Bundle();
         String mPath = null;
 
