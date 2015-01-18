@@ -99,20 +99,22 @@ public class DevicesJson implements Constants {
     }
 
     private boolean getBoolean(String name) {
-        try {
-            return deviceObject.getBoolean(name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if (deviceObject != null)
+            try {
+                return deviceObject.getBoolean(name);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         return false;
     }
 
     private String getString(String name) {
-        try {
-            return deviceObject.getString(name);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        if (deviceObject != null)
+            try {
+                return deviceObject.getString(name);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         return null;
     }
 
