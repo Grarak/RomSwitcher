@@ -141,7 +141,7 @@ public class InstallationFragment extends RecyclerViewFragment {
                         @Override
                         public void run() {
                             DevicesJson json = Utils.getDevicesJson(getActivity());
-                            RootUtils.writePartition("/sdcard/romswitcher/download.img", json.getRecoveryPartition());
+                            RootUtils.writePartition("/sdcard/romswitcher/download.img", json.getBootPartition());
                             installing = false;
                             setTextTitle(getString(R.string.done) + "!");
                             getActivity().runOnUiThread(new Runnable() {
