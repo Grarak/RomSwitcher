@@ -39,9 +39,10 @@
     <string name="download">Download</string>
     <string name="changelog">Changelog</string>
     <string name="install_confirm">Install %s?</string>
-    <string name="downloading">Downloading %s</string>
+    <string name="downloading">Downloading</string>
     <string name="download_failed">Download has failed</string>
     <string name="download_cancel">Download has been canceled</string>
+    <string name="installation_success">Installation was successful.\nPlease reboot your device!</string>
 
     <!-- Recovery -->
     <string name="select_action">Select an action</string>

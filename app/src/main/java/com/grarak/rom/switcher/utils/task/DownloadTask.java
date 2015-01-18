@@ -57,19 +57,13 @@ public class DownloadTask extends AsyncTask<String, Integer, String> implements 
         layout.setOrientation(LinearLayout.VERTICAL);
 
         mProgressDialog = new ProgressDialog(context);
-        mProgressDialog.setMessage(context.getString(R.string.downloading, file));
+        mProgressDialog.setMessage(context.getString(R.string.downloading));
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
         mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                cancel();
-            }
-        });
-        mProgressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
                 cancel();
             }
         });
@@ -133,10 +127,8 @@ public class DownloadTask extends AsyncTask<String, Integer, String> implements 
             return e.toString();
         } finally {
             try {
-                if (output != null)
-                    output.close();
-                if (input != null)
-                    input.close();
+                if (output != null) output.close();
+                if (input != null) input.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

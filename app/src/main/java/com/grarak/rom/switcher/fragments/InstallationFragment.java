@@ -144,6 +144,22 @@ public class InstallationFragment extends RecyclerViewFragment {
                             RootUtils.writePartition("/sdcard/romswitcher/download.img", json.getRecoveryPartition());
                             installing = false;
                             setTextTitle(getString(R.string.done) + "!");
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.confirmDialog(null, getString(R.string.installation_success),
+                                            new Utils.OnConfirmDialogListener() {
+                                                @Override
+                                                public void onDismiss() {
+                                                }
+
+                                                @Override
+                                                public void onConfirm() {
+                                                    Utils.reboot();
+                                                }
+                                            }, getActivity());
+                                }
+                            });
                         }
                     }).start();
                 }

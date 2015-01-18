@@ -22,7 +22,7 @@ import com.grarak.rom.switcher.utils.task.DownloadTask;
  */
 public class DownloadCardViewItem extends BaseCardView implements Constants {
 
-    private HeaderCardView headerCardView;
+    private DownloadHeaderView downloadHeaderView;
 
     private TextView md5sumView;
     private TextView noteView;
@@ -38,25 +38,22 @@ public class DownloadCardViewItem extends BaseCardView implements Constants {
 
     public DownloadCardViewItem(Context context) {
         super(context, R.layout.download_cardview);
-
-        headerCardView = new HeaderCardView(context);
-
-        setUpTitle();
     }
 
     @Override
     protected void setUpInnerLayout(final View view) {
         super.setUpInnerLayout(view);
 
+        downloadHeaderView = new DownloadHeaderView(getContext());
+        setUpTitle();
+
         md5sumView = (TextView) view.findViewById(R.id.md5sum_view);
         noteView = (TextView) view.findViewById(R.id.note_view);
-        ImageButton downloadButton = (ImageButton) view.findViewById(R.id.download_view);
-        ImageButton changelogButton = (ImageButton) view.findViewById(R.id.changelog_view);
 
         if (md5sum != null) md5sumView.setText(Html.fromHtml("<b>md5sum:</b> " + md5sum));
         setNoteView();
 
-        downloadButton.setOnClickListener(new OnClickListener() {
+        downloadHeaderView.downloadButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.confirmDialog(null, getContext().getString(R.string.install_confirm, version),
@@ -91,7 +88,7 @@ public class DownloadCardViewItem extends BaseCardView implements Constants {
             }
         });
 
-        changelogButton.setOnClickListener(new OnClickListener() {
+        downloadHeaderView.changelogButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -151,14 +148,14 @@ public class DownloadCardViewItem extends BaseCardView implements Constants {
     }
 
     private void setUpTitle() {
-        if (headerCardView != null) {
+        if (downloadHeaderView != null) {
             if (version == null) removeHeader();
-            else addHeader(headerCardView);
+            else addHeader(downloadHeaderView);
         }
-        if (headerCardView != null && version != null) {
+        if (downloadHeaderView != null && version != null) {
             String text = getContext().getString(R.string.version) + " " + version;
             if (size != null) text += " (" + size + ")";
-            headerCardView.setText(text);
+            downloadHeaderView.setText(text);
         }
     }
 
@@ -172,6 +169,24 @@ public class DownloadCardViewItem extends BaseCardView implements Constants {
 
     public interface OnDownloadListener {
         public void onSuccess();
+    }
+
+    private class DownloadHeaderView extends HeaderCardView {
+
+        protected ImageButton downloadButton;
+        protected ImageButton changelogButton;
+
+        public DownloadHeaderView(Context context) {
+            super(context, R.layout.header_downloadcardview);
+        }
+
+        @Override
+        public void setUpHeaderLayout(View view) {
+            super.setUpHeaderLayout(view);
+            textView = (TextView) view.findViewById(R.id.header_view);
+            downloadButton = (ImageButton) view.findViewById(R.id.download_view);
+            changelogButton = (ImageButton) view.findViewById(R.id.changelog_view);
+        }
     }
 
     public static class DDownloadCardView implements RecyclerViewAdapter.ViewInterface {

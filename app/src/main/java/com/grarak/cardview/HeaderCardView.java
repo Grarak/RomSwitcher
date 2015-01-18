@@ -14,7 +14,7 @@ public class HeaderCardView {
 
     private static final int DEFAULT_LAYOUT = R.layout.header_cardview;
 
-    private TextView textView;
+    protected TextView textView;
     private String title;
     private View view;
 
