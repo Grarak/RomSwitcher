@@ -3,8 +3,10 @@ package com.grarak.rom.switcher.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
 
 import com.grarak.rom.switcher.R;
@@ -22,6 +24,10 @@ import java.io.InputStreamReader;
 public class Utils implements Constants {
 
     private static DevicesJson mDevicesJson;
+
+    public static void launchUrl(Context context, String link) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+    }
 
     public static void rebootRecovery() {
         RootUtils.runCommand("touch " + ROMSWITCHER_RECOVERY_FILE);

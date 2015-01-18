@@ -17,9 +17,13 @@
     <string name="recovery">Recovery</string>
     <string name="internal_storage">Internal Storage</string>
     <string name="external_storage">External Storage</string>
+    <string name="faq">FAQ</string>
+    <string name="about_us">About us</string>
 
     <!-- Header -->
+    <string name="general">General</string>
     <string name="roms">ROMs</string>
+    <string name="other">Other</string>
 
     <!-- Information -->
     <string name="supported">Your device is supported</string>
@@ -66,5 +70,23 @@
     <string name="default_not_allowed">Default as name is not allowed</string>
     <string name="name_too_short">Name is too short</string>
     <string name="name_duplicated">Another ROM already has the same name</string>
+
+    <!-- FAQ -->
+    <string name="faq_full">Frequently Asked Questions</string>
+
+    <!-- About us -->
+    <string name="know_us">Get to know us</string>
+    <string name="license">License</string>
+    <string name="app_license">RomSwitcher (Application) is licensed under the Apache License, Version 2.0, and uses following libraries</string>
+    <string name="appcompat_v7">v7 Appcompat Library</string>
+    <string name="cardview_v7">v7 Cardview Library</string>
+    <string name="recyclerview_v7">v7 Recyclerview Library</string>
+    <string name="google">Google</string>
+    <string name="roottools">RootTools</string>
+    <string name="stericson">Stephen Stericson</string>
+    <string name="open_source">Open source</string>
+    <string name="open_source_summary">This application is open source. Check it out on my Github.</string>
+    <string name="donate">Donate</string>
+    <string name="donate_summary">Send me a few bucks! :)</string>
 
 </resources>

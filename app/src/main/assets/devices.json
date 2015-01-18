@@ -10,9 +10,11 @@
             "boot": "/dev/block/mmcblk0p9",
             "recovery": "/dev/block/mmcblk0p10",
             "externalstorages": [ "/storage/extSdCard", "/storage/sdcard1" ],
-            "config": "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/i9500.json"
+            "config": "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/i9500.json",
+            "faq": "https://raw.githubusercontent.com/Grarak/grarak.github.io/master/romswitcher/configuration/i9500_faq.json",
+            "donate": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=JSCNTZC4H73JG"
 
-        },
+        }
 
     ]
 

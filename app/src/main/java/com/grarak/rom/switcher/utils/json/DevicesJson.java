@@ -82,6 +82,22 @@ public class DevicesJson implements Constants {
         return getString("config");
     }
 
+    public boolean hasFaq() {
+        return getFaq() != null;
+    }
+
+    public String getFaq() {
+        return getString("faq");
+    }
+
+    public boolean hasDonation() {
+        return getDonation() != null;
+    }
+
+    public String getDonation() {
+        return getString("donate");
+    }
+
     private boolean getBoolean(String name) {
         try {
             return deviceObject.getBoolean(name);

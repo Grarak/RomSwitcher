@@ -179,6 +179,6 @@ public class InstallationFragment extends RecyclerViewFragment {
 
     @Override
     public int getMainViewId() {
-        return R.layout.installation_fragment;
+        return R.layout.swiperefresh_fragment;
     }
 }

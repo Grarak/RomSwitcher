@@ -64,7 +64,7 @@ public class DownloadsJson implements Constants {
         try {
             mDownloads = new JSONObject(json).getJSONArray("downloads");
         } catch (JSONException e) {
-            Log.e(TAG, "Failed to read downloads JSON");
+            Log.e(TAG, "Failed to refresh downloads JSON");
         }
     }
 

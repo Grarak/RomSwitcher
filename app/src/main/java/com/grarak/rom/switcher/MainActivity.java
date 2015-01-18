@@ -24,6 +24,8 @@ import android.widget.ProgressBar;
 
 import com.grarak.rom.switcher.elements.ListAdapter;
 import com.grarak.rom.switcher.elements.ScrimInsetsFrameLayout;
+import com.grarak.rom.switcher.fragments.AboutusFragment;
+import com.grarak.rom.switcher.fragments.FAQFragment;
 import com.grarak.rom.switcher.fragments.InformationFragment;
 import com.grarak.rom.switcher.fragments.InstallationFragment;
 import com.grarak.rom.switcher.fragments.ROMFragment;
@@ -83,12 +85,12 @@ public class MainActivity extends ActionBarActivity implements Constants {
     }
 
     private void setList() {
-        boolean supported = Utils.getDevicesJson(this).isSupported();
-
         mList.clear();
         mList.add(new ListAdapter.MainHeader());
+        mList.add(new ListAdapter.Header(getString(R.string.general)));
         mList.add(new ListAdapter.Item(getString(R.string.information), new InformationFragment()));
 
+        boolean supported = Utils.getDevicesJson(this).isSupported();
         if (supported) {
             mList.add(new ListAdapter.Item(getString(R.string.installation), new InstallationFragment()));
 
@@ -102,6 +104,11 @@ public class MainActivity extends ActionBarActivity implements Constants {
                             ROMFragment.newInstance(ROMFragment.STORAGE.EXTERNAL)));
             }
         }
+
+        mList.add(new ListAdapter.Header(getString(R.string.other)));
+        if (supported && Utils.getDevicesJson(this).hasFaq())
+            mList.add(new ListAdapter.Item(getString(R.string.faq), new FAQFragment()));
+        mList.add(new ListAdapter.Item(getString(R.string.about_us), new AboutusFragment()));
     }
 
     private void setInterface() {
@@ -134,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
             }
         });
 
-        selectItem(1);
+        selectItem(2);
     }
 
     private class Task extends AsyncTask<Void, Void, String> {
@@ -249,6 +256,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
 
         TypedArray ta = obtainStyledAttributes(new int[]{R.attr.actionBarSize});
         int actionBarSize = ta.getDimensionPixelSize(0, 100);
+        ta.recycle();
         if (Utils.getScreenOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {
             params.width = width / 2;
             if (tablet) params.width -= actionBarSize + 30;

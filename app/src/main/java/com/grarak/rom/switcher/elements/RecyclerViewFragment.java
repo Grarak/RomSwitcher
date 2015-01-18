@@ -36,6 +36,8 @@ import java.util.List;
  */
 public class RecyclerViewFragment extends Fragment {
 
+    protected LayoutInflater inflater;
+    protected ViewGroup container;
     protected View view;
     protected FrameLayout mBackgroundView;
     protected TextView mTitleView;
@@ -51,6 +53,10 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+
+        this.inflater = inflater;
+        this.container = container;
+
         view = inflater.inflate(getMainViewId(), container, false);
         Drawable actionBarDrawable = getResources().getDrawable(R.color.color_primary);
         ((ActionBarActivity) getActivity()).getSupportActionBar().setBackgroundDrawable(actionBarDrawable);
@@ -242,6 +248,7 @@ public class RecyclerViewFragment extends Fragment {
     public int getBackgroundHeight() {
         TypedArray ta = getActivity().obtainStyledAttributes(new int[]{R.attr.actionBarSize});
         int actionBarSize = ta.getDimensionPixelSize(0, 100);
+        ta.recycle();
         int orientation = Utils.getScreenOrientation(getActivity());
         int ret = getResources().getDisplayMetrics().heightPixels / 3 - actionBarSize;
         if (orientation == Configuration.ORIENTATION_PORTRAIT)
