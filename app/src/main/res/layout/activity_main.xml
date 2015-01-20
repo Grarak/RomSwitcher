@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
@@ -21,10 +21,11 @@
 
         <FrameLayout
             android:id="@+id/content_frame"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <com.grarak.rom.switcher.elements.ScrimInsetsFrameLayout
         android:id="@+id/scrimInsetsFrameLayout"

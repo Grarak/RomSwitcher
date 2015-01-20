@@ -3,7 +3,6 @@ package com.grarak.rom.switcher;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.graphics.LightingColorFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
 
     private String mTitle;
 
-    private Toolbar toolbar;
+    public static Toolbar toolbar;
     private ProgressBar progressBar;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -254,14 +253,11 @@ public class MainActivity extends ActionBarActivity implements Constants {
         DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mScrimInsetsFrameLayout.getLayoutParams();
         int width = getResources().getDisplayMetrics().widthPixels;
 
-        TypedArray ta = obtainStyledAttributes(new int[]{R.attr.actionBarSize});
-        int actionBarSize = ta.getDimensionPixelSize(0, 100);
-        ta.recycle();
         if (Utils.getScreenOrientation(this) == Configuration.ORIENTATION_LANDSCAPE) {
             params.width = width / 2;
-            if (tablet) params.width -= actionBarSize + 30;
+            if (tablet) params.width -= Utils.getActionBarHeight(this) + 30;
         } else {
-            params.width = tablet ? width / 2 : width - actionBarSize;
+            params.width = tablet ? width / 2 : width - Utils.getActionBarHeight(this);
         }
 
         return params;

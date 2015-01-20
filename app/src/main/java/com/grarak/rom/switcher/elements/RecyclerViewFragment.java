@@ -3,7 +3,6 @@ package com.grarak.rom.switcher.elements;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -14,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.grarak.rom.switcher.MainActivity;
 import com.grarak.rom.switcher.R;
 import com.grarak.rom.switcher.utils.Utils;
 import com.grarak.rom.switcher.utils.task.WebpageReaderTask;
@@ -46,6 +47,7 @@ public class RecyclerViewFragment extends Fragment {
     protected LinearLayoutManager mLayoutManager;
     protected Handler handler;
 
+    private Toolbar toolbar = MainActivity.toolbar;
     private ProgressBar progressBar;
     private RecyclerViewAdapter.Adapter mAdapter;
     private List<RecyclerViewAdapter.ViewInterface> views = new ArrayList<>();
@@ -87,23 +89,61 @@ public class RecyclerViewFragment extends Fragment {
         });
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            }
+            private int scrollMargin = 10;
+            private boolean changing;
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(RecyclerView recyclerView, int dx, final int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                final int currentFirstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
 
-                ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-                if (currentFirstVisibleItem > 1) {
-                    actionBar.hide();
-                } else if (currentFirstVisibleItem == 0) {
-                    actionBar.show();
-                }
+                if (changing) return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        changing = true;
+                        int actionBarHeight = Utils.getActionBarHeight(getActivity());
+                        for (int i = 0; i <= actionBarHeight / scrollMargin; i++) {
+                            try {
+                                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)
+                                        toolbar.getLayoutParams();
+
+                                int margin = params.topMargin;
+                                if (dy < 0 && margin < 0)
+                                    margin += scrollMargin;
+                                else if (dy > 0 && margin > -actionBarHeight)
+                                    margin -= scrollMargin;
+
+                                if (margin >= 0) margin = 0;
+                                if (margin <= -actionBarHeight + scrollMargin)
+                                    margin = -actionBarHeight + 1;
+
+                                params.topMargin = margin;
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        toolbar.requestLayout();
+                                    }
+                                });
+
+                                Thread.sleep(5);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        try {
+                            Thread.sleep(100);
+                            changing = false;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
+        params.topMargin = 0;
+        toolbar.requestLayout();
 
         progressBar = new ProgressBar(getActivity());
         setProgressBar(progressBar);
@@ -230,7 +270,7 @@ public class RecyclerViewFragment extends Fragment {
         if (mBackgroundView != null) {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mBackgroundView.getLayoutParams();
             params.height = getBackgroundHeight();
-            mBackgroundView.setLayoutParams(params);
+            mBackgroundView.requestLayout();
             mBackgroundView.setPadding(padding, 0, padding, 0);
         }
     }
@@ -247,11 +287,8 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     public int getBackgroundHeight() {
-        TypedArray ta = getActivity().obtainStyledAttributes(new int[]{R.attr.actionBarSize});
-        int actionBarSize = ta.getDimensionPixelSize(0, 100);
-        ta.recycle();
         int orientation = Utils.getScreenOrientation(getActivity());
-        int ret = getResources().getDisplayMetrics().heightPixels / 3 - actionBarSize;
+        int ret = getResources().getDisplayMetrics().heightPixels / 3 - Utils.getActionBarHeight(getActivity());
         if (orientation == Configuration.ORIENTATION_PORTRAIT)
             ret -= Utils.getNavigationBarHeight(getActivity());
         return ret;

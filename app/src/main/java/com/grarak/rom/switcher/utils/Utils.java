@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
 
@@ -24,6 +25,13 @@ import java.io.InputStreamReader;
 public class Utils implements Constants {
 
     private static DevicesJson mDevicesJson;
+
+    public static int getActionBarHeight(Context context) {
+        TypedArray ta = context.obtainStyledAttributes(new int[]{R.attr.actionBarSize});
+        int actionBarSize = ta.getDimensionPixelSize(0, 100);
+        ta.recycle();
+        return actionBarSize;
+    }
 
     public static void launchUrl(Context context, String link) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
