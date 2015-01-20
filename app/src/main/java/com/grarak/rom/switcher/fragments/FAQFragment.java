@@ -45,61 +45,20 @@ public class FAQFragment extends RecyclerViewFragment {
     }
 
     private void create() {
-        new Thread(new Runnable() {
-
-            private boolean loading;
-
+        readFromWebpage(Utils.getDevicesJson(getActivity()).getFaq(), new WebpageReaderTask.WebpageListener() {
             @Override
-            public void run() {
-                new WebpageReaderTask(new WebpageReaderTask.WebpageListener() {
+            public void onWebpageResult(final String raw, final String html) {
+                setTextTitle(getString(R.string.faq_full));
+
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void onWebpageResult(final String raw, final String html) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mSwipeRefreshLayout.setRefreshing(false);
-                                    }
-                                });
-                                loading = false;
-                                if (raw == null || raw.isEmpty()) {
-                                    setTextTitle(getString(R.string.no_connection));
-                                    return;
-                                }
-
-                                setTextTitle(getString(R.string.faq_full));
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        refresh(raw);
-                                    }
-                                });
-                            }
-                        }).start();
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        refresh(raw);
                     }
-                }).execute(Utils.getDevicesJson(getActivity()).getFaq());
-
-                int count = 0;
-                loading = true;
-                while (loading) {
-                    try {
-                        count++;
-                        String title = getString(R.string.loading);
-                        for (int i = 0; i < count; i++)
-                            title += " .";
-                        setTextTitle(title);
-                        if (count >= 5) count = 0;
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
+                });
             }
-        }).start();
+        });
     }
 
     private void refresh(String json) {

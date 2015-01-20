@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.grarak.rom.switcher.R;
 import com.grarak.rom.switcher.utils.Utils;
+import com.grarak.rom.switcher.utils.task.WebpageReaderTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,6 +276,50 @@ public class RecyclerViewFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         if (handler != null) handler.removeCallbacksAndMessages(null);
+    }
+
+    public void readFromWebpage(final String web, final WebpageReaderTask.WebpageListener webpageListener) {
+        new Thread(new Runnable() {
+
+            private boolean loading;
+
+            @Override
+            public void run() {
+                new WebpageReaderTask(new WebpageReaderTask.WebpageListener() {
+                    @Override
+                    public void onWebpageResult(final String raw, final String html) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loading = false;
+                                if (raw == null || raw.isEmpty()) {
+                                    setTextTitle(getString(R.string.no_connection));
+                                    return;
+                                }
+
+                                webpageListener.onWebpageResult(raw, html);
+                            }
+                        }).start();
+                    }
+                }).execute(web);
+
+                int count = 0;
+                loading = true;
+                while (loading) {
+                    try {
+                        count++;
+                        String title = getString(R.string.loading);
+                        for (int i = 0; i < count; i++)
+                            title += " .";
+                        setTextTitle(title);
+                        if (count >= 5) count = 0;
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
 }
