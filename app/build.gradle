@@ -8,8 +8,8 @@ android {
         applicationId "com.grarak.rom.switcher"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 3
-        versionName "0.8.1"
+        versionCode 4
+        versionName "0.8.2"
     }
     buildTypes {
         release {
