@@ -13,9 +13,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Created by willi on 13.01.15.
@@ -23,11 +20,6 @@ import java.util.concurrent.Future;
 public class RootUtils implements Constants {
 
     public static SU su;
-
-    public static void runCommand(String command) {
-        if (su == null) su = new SU();
-        su.run(command);
-    }
 
     public static boolean rooted() {
         return RootTools.isRootAvailable();
@@ -42,36 +34,36 @@ public class RootUtils implements Constants {
     }
 
     public static void writePartition(String image, String partition) {
-        getOutput("dd if=" + image + " of=" + partition);
+        runCommand("dd if=" + image + " of=" + partition);
     }
 
     public static void moveFile(String oldFile, String newFile) {
-        getOutput("mv -f " + oldFile + " " + newFile);
+        runCommand("mv -f " + oldFile + " " + newFile);
     }
 
     public static String getSize(String file) {
-        return getOutput("du -sm " + file).split(file)[0].replace(" ", "").trim();
+        return runCommand("du -sm " + file).split(file)[0].replace(" ", "").trim();
     }
 
     public static List<String> listFiles(String directory) {
-        return new ArrayList<>(Arrays.asList(getOutput("ls " + directory).split("\\r?\\n")));
+        return new ArrayList<>(Arrays.asList(runCommand("ls " + directory).split("\\r?\\n")));
     }
 
     public static String readFile(String file) {
-        return getOutput("cat " + file);
+        return runCommand("cat " + file);
     }
 
     public static boolean fileExist(String file) {
-        String output = getOutput("[ -e " + file + " ] && echo true");
+        String output = runCommand("[ -e " + file + " ] && echo true");
         return output != null && output.contains("true");
     }
 
     public static boolean isDirectory(String directory) {
-        String output = getOutput("[ -d " + directory + " ] && echo true");
+        String output = runCommand("[ -d " + directory + " ] && echo true");
         return output != null && output.contains("true");
     }
 
-    public static String getOutput(String command) {
+    public static String runCommand(String command) {
         if (su == null) su = new SU();
         return su.runCommand(command);
     }
@@ -97,57 +89,29 @@ public class RootUtils implements Constants {
             }
         }
 
-        public synchronized void run(final String command) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        bufferedWriter.write(command + "\n");
-                        bufferedWriter.flush();
-
-                        Log.i(TAG, "run: " + command);
-                    } catch (IOException e) {
-                        Log.e(TAG, "Failed to run " + command);
-                    }
-                }
-            }).start();
-        }
-
         public synchronized String runCommand(final String command) {
-            Future<String> value = Executors.newFixedThreadPool(3).submit(new Callable<String>() {
-                @Override
-                public String call() {
-                    StringBuilder sb = new StringBuilder();
-
-                    try {
-                        String callback = "/shellCallback/";
-                        bufferedWriter.write(command + "\necho " + callback + "\n");
-                        bufferedWriter.flush();
-
-                        int i;
-                        char[] buffer = new char[256];
-                        while (true) {
-                            i = bufferedReader.read(buffer);
-                            sb.append(buffer, 0, i);
-                            if ((i = sb.indexOf(callback)) > -1) {
-                                sb.delete(i, i + callback.length());
-                                break;
-                            }
-                        }
-
-                        Log.i(TAG, "Output of: " + command + " : " + sb.toString().trim());
-                    } catch (IOException e) {
-                        Log.e(TAG, "Failed to run " + command);
-                    }
-
-                    return sb.toString().trim();
-                }
-            });
-
             try {
-                return value.get();
-            } catch (Exception e) {
-                return "";
+                StringBuilder sb = new StringBuilder();
+                String callback = "/shellCallback/";
+                bufferedWriter.write(command + "\necho " + callback + "\n");
+                bufferedWriter.flush();
+
+                int i;
+                char[] buffer = new char[256];
+                while (true) {
+                    i = bufferedReader.read(buffer);
+                    sb.append(buffer, 0, i);
+                    if ((i = sb.indexOf(callback)) > -1) {
+                        sb.delete(i, i + callback.length());
+                        break;
+                    }
+                }
+
+                Log.i(TAG, "Output of: " + command + " : " + sb.toString().trim());
+                return sb.toString().trim();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to run " + command);
+                return null;
             }
         }
 
