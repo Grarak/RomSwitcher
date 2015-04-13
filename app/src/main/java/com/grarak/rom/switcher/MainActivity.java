@@ -37,6 +37,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.grarak.rom.switcher.elements.ListAdapter;
 import com.grarak.rom.switcher.elements.ScrimInsetsFrameLayout;
 import com.grarak.rom.switcher.fragments.AboutusFragment;
@@ -67,6 +69,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
     private DrawerLayout mDrawerLayout;
     private ScrimInsetsFrameLayout mScrimInsetsFrameLayout;
     private ListView mDrawerList;
+    private AdView mAdView;
 
     private List<ListAdapter.ListItem> mList = new ArrayList<>();
 
@@ -97,6 +100,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
         mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.color_primary_dark));
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerList = (ListView) findViewById(R.id.listview_drawer);
+        mAdView = (AdView) findViewById(R.id.adView);
     }
 
     private void setList() {
@@ -156,7 +160,8 @@ public class MainActivity extends ActionBarActivity implements Constants {
             }
         });
 
-        selectItem(2);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private class Task extends AsyncTask<Void, Void, String> {
@@ -204,7 +209,7 @@ public class MainActivity extends ActionBarActivity implements Constants {
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
-
+            selectItem(2);
         }
 
     }
@@ -258,9 +263,22 @@ public class MainActivity extends ActionBarActivity implements Constants {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mAdView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
-        super.onDestroy();
+        mAdView.destroy();
         if (RootUtils.su != null) RootUtils.su.close();
+        super.onDestroy();
     }
 
     private DrawerLayout.LayoutParams getDrawerParams() {

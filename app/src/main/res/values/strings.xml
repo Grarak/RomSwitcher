@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Romswitcher</string>
+    <string name="banner_ad_unit_id">ca-app-pub-1851546461606210/3387229886</string>
     <string name="no_root">No root available</string>
     <string name="no_busybox">No busybox available</string>
     <string name="cancel">Cancel</string>
